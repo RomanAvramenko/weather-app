@@ -33,9 +33,9 @@
         background-color: inherit;
     }
 
-    &__expand > button {
-        border: none;
-        background-color: inherit;
+    &__expand {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
     }
 }
 

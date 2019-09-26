@@ -1,5 +1,5 @@
 import React from 'react';
-
+// eslint-disable-next-line
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
 import './App.scss';

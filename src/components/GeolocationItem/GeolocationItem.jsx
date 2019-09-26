@@ -2,9 +2,9 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Request } from "../../request";
-
 import "./GeolocationItem.scss";
+
+import axios from "axios";
 
 class GeolocationItem extends React.Component {
   constructor(props) {
@@ -17,30 +17,23 @@ class GeolocationItem extends React.Component {
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        const request = new Request();
-        request.get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude.toFixed(
-            5
-          )}&lon=${position.coords.longitude.toFixed(
-            5
-          )}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`,
-          responseJSON => {
-            const geolocationResp = JSON.parse(responseJSON);
-            if (geolocationResp) {
+        axios
+          .get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`)
+          .then(result => {
+            if (result.data) {
               this.setState({
                 geolocationResp: [
                   ...this.state.geolocationResp,
-                  geolocationResp
+                  result.data
                 ]
               });
             } else {
-              console.error("Response is empty", responseJSON);
+              console.error("Response is empty", result);
             }
-          },
-          e => {
-            throw new Error(e);
-          }
-        );
+          })
+          .catch(e => {
+            console.log(e.config);
+          });
       });
     } else {
       console.error("Geolocation is not require");
@@ -69,6 +62,7 @@ class GeolocationItem extends React.Component {
                 pathname: "/expand",
                 state: { name: item.name }
               }}
+              className="geoLocItem__expand"
             >
               Forecast for 5 days
             </Link>

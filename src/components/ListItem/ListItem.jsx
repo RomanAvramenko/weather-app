@@ -2,7 +2,7 @@ import React from "react";
 
 import { Link } from "react-router-dom";
 
-import { Request } from "../../request";
+import axios from "axios";
 
 import "./ListItem.scss";
 
@@ -54,13 +54,13 @@ class ListItem extends React.Component {
   }
 
   handleClick() {
-    const request = new Request();
-    request.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${this.props.currentItem.text}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`,
-      responseJSON => {
-        const response = JSON.parse(responseJSON);
-        if (response) {
-          localStorage.setItem("response", JSON.stringify(response));
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${this.props.currentItem.text}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+      )
+      .then(response => {
+        if (response.data) {
+          localStorage.setItem("response", JSON.stringify(response.data));
           this.setState({
             response: [
               ...this.state.response,
@@ -68,13 +68,12 @@ class ListItem extends React.Component {
             ]
           });
         } else {
-          console.error("Response is empty", responseJSON);
+          console.error("Response is empty", response.data);
         }
-      },
-      e => {
-        throw new Error(e);
-      }
-    );
+      })
+      .catch(e => {
+        console.log(e.config);
+      });
   }
 
   deleteItem(id) {
@@ -100,12 +99,13 @@ class ListItem extends React.Component {
           <div className="theListItem__name">
             <span>{item.name}</span>
           </div>
-          <div className="theListItem__expand">
+          <div>
             <Link
               to={{
                 pathname: "/expand",
                 state: { name: item.name }
               }}
+              className="theListItem__expand"
             >
               Forecast for 5 days
             </Link>

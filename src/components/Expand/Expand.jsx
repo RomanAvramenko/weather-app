@@ -2,7 +2,7 @@ import React from "react";
 
 import moment from "moment";
 
-import { Request } from "../../request";
+import axios from "axios";
 
 import "./Expand.scss";
 
@@ -14,56 +14,54 @@ class Expand extends React.Component {
       expandForecast: []
     };
   }
-
+  
   componentDidMount() {
     this._isMounted = true;
-    const request = new Request();
     if (this.props.location.state === undefined) {
-      request.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${window.sessionStorage.getItem(
-          "key"
-        )}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`,
-        responseJSON => {
-          const expandForecast = JSON.parse(responseJSON);
-          if (expandForecast || this._isMounted) {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${window.sessionStorage.getItem(
+            "key"
+          )}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+        )
+        .then(result => {
+          if (result.data || this._isMounted) {
             this.setState({
-              expandForecast: [...this.state.expandForecast, expandForecast]
+              expandForecast: [...this.state.expandForecast, result.data]
             });
           } else {
-            console.error("Response is empty", responseJSON);
+            console.error("Response is empty", result.data);
           }
-        },
-        e => {
-          throw new Error(e);
-        }
-      );
+        })
+        .catch(e => {
+          console.log(e.config);
+        });
     } else {
-      request.get(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${this.props.location.state.name}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`,
-        responseJSON => {
-          const expandForecast = JSON.parse(responseJSON);
-          if (expandForecast || this._isMounted) {
+      axios
+        .get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=
+          ${this.props.location.state.name}
+          &units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+        )
+        .then(result => {
+          if (result.data || this._isMounted) {
             this.setState({
-              expandForecast: [...this.state.expandForecast, expandForecast]
+              expandForecast: [...this.state.expandForecast, result.data]
             });
           } else {
-            console.error("Response is empty", responseJSON);
+            console.error("Response is empty", result.data);
           }
-        },
-        e => {
-          throw new Error(e);
-        }
-      );
+        })
+        .catch(e => {
+          console.log(e.config);
+        });
     }
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-    window.removeEventListener(
-      "beforeunload",
-      window.sessionStorage.setItem("key", this.props.location.state.name)
-    );
-  }
+/*     (window.sessionStorage.setItem("key", this.props.location.state.name))
+ */  }
 
   render() {
     return (
