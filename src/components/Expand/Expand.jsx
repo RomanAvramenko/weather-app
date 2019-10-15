@@ -1,7 +1,5 @@
 import React from "react";
-
 import moment from "moment";
-
 import axios from "axios";
 
 import "./Expand.scss";
@@ -11,57 +9,57 @@ class Expand extends React.Component {
     super();
     this._isMounted = false;
     this.state = {
-      expandForecast: []
+      expandForecast: [],
+      imageResp: []
     };
   }
-  
+
   componentDidMount() {
     this._isMounted = true;
-    if (this.props.location.state === undefined) {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/forecast?q=${window.sessionStorage.getItem(
-            "key"
-          )}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
-        )
-        .then(result => {
-          if (result.data || this._isMounted) {
-            this.setState({
-              expandForecast: [...this.state.expandForecast, result.data]
-            });
-          } else {
-            console.error("Response is empty", result.data);
-          }
-        })
-        .catch(e => {
-          console.log(e.config);
-        });
-    } else {
-      axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/forecast?q=
-          ${this.props.location.state.name}
-          &units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
-        )
-        .then(result => {
-          if (result.data || this._isMounted) {
-            this.setState({
-              expandForecast: [...this.state.expandForecast, result.data]
-            });
-          } else {
-            console.error("Response is empty", result.data);
-          }
-        })
-        .catch(e => {
-          console.log(e.config);
-        });
+    if (this.props.location.state) {
+      window.addEventListener(
+        "beforeunload",
+        window.sessionStorage.setItem("key", this.props.location.state.name)
+      );
     }
+    const loadData = undefined;
+    axios
+      .all([
+        axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${
+            loadData
+              ? this.props.location.state.name
+              : window.sessionStorage.getItem("key")
+          }&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+        ),
+        axios.get(
+          `https://api.unsplash.com/search/photos?client_id=12d2d6b1c85dfb2d161d77513660ad8cc333ac66ea4bedb36b7691096b4c3dad&page=1&query=${
+            loadData
+              ? this.props.location.state.name
+              : window.sessionStorage.getItem("key")
+          } architecture`
+        )
+      ])
+      .then(
+        axios.spread((result, imgResp) => {
+          if (result.data || this._isMounted) {
+            this.setState({
+              expandForecast: [...this.state.expandForecast, result.data],
+              imageResp: [...this.state.imageResp, imgResp.data]
+            });
+          } else {
+            console.error("Response is empty", result.data);
+          }
+        })
+      )
+      .catch(e => {
+        console.log(e.config);
+      });
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-/*     (window.sessionStorage.setItem("key", this.props.location.state.name))
- */  }
+  }
 
   render() {
     return (
@@ -143,6 +141,12 @@ class Expand extends React.Component {
             </div>
           );
         })}
+        {this.state.imageResp.map(i => {
+          return(
+            <img src={`${i.results[0].urls.regular}`} alt='' className="expand__bg" key={i.results[0].id}/>
+          )
+        })
+        }
       </div>
     );
   }
