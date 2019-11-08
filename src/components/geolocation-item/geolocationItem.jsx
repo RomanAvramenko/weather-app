@@ -1,18 +1,12 @@
 import React from "react";
-
 import { Link } from "react-router-dom";
-
-import "./GeolocationItem.scss";
-
+import "./geolocationItem.scss";
 import axios from "axios";
 
-class GeolocationItem extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+export default class GeolocationItem extends React.Component {
+    state = {
       geolocationResp: []
     };
-  }
 
   componentDidMount() {
     if (navigator.geolocation) {
@@ -72,5 +66,3 @@ class GeolocationItem extends React.Component {
     });
   }
 }
-
-export default GeolocationItem;

@@ -2,17 +2,14 @@ import React from "react";
 import moment from "moment";
 import axios from "axios";
 
-import "./Expand.scss";
+import "./expand.scss";
 
-class Expand extends React.Component {
-  constructor() {
-    super();
-    this._isMounted = false;
-    this.state = {
-      expandForecast: [],
-      imageResp: []
-    };
-  }
+export default class Expand extends React.Component {
+  _isMounted = false;
+  state = {
+    expandForecast: [],
+    imageResp: []
+  };
 
   componentDidMount() {
     this._isMounted = true;
@@ -37,7 +34,7 @@ class Expand extends React.Component {
             loadData
               ? this.props.location.state.name
               : window.sessionStorage.getItem("key")
-          } architecture`
+          } city`
         )
       ])
       .then(
@@ -67,89 +64,94 @@ class Expand extends React.Component {
         {this.state.expandForecast.map(item => {
           return (
             <div className="expand" key={item.city.id}>
-              <h1>{item.city.name}</h1>
-              <div className="expand__item">
-                <div>{moment(item.list[0].dt_txt).format("dddd")}</div>
-                <div>
-                  {item.list[0].main.temp.toFixed()}&deg;/
-                  {item.list[4].main.temp.toFixed()}&deg;
+              <h1 className="expand__name">{item.city.name}</h1>
+              <ul className="expand__list">
+                <div className="expand__list__item">
+                  <div>{moment(item.list[0].dt_txt).format("dddd")}</div>
+                  <div>
+                    {item.list[0].main.temp.toFixed()}&deg;/
+                    {item.list[4].main.temp.toFixed()}&deg;
+                  </div>
+                  <div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${item.list[0].weather[0].icon}@2x.png`}
+                      alt=""
+                    />
+                  </div>
+                  <div>{item.list[0].weather[0].description}</div>
                 </div>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${item.list[0].weather[0].icon}@2x.png`}
-                    alt=""
-                  />
+                <div className="expand__list__item">
+                  <div>{moment(item.list[7].dt_txt).format("dddd")}</div>
+                  <div>
+                    {item.list[7].main.temp.toFixed()}&deg;/
+                    {item.list[11].main.temp.toFixed()}&deg;
+                  </div>
+                  <div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${item.list[7].weather[0].icon}@2x.png`}
+                      alt=""
+                    />
+                  </div>
+                  <div>{item.list[7].weather[0].description}</div>
                 </div>
-                <div>{item.list[0].weather[0].description}</div>
-              </div>
-              <div className="expand__item">
-                <div>{moment(item.list[7].dt_txt).format("dddd")}</div>
-                <div>
-                  {item.list[7].main.temp.toFixed()}&deg;/
-                  {item.list[11].main.temp.toFixed()}&deg;
+                <div className="expand__list__item">
+                  <div>{moment(item.list[15].dt_txt).format("dddd")}</div>
+                  <div>
+                    {item.list[15].main.temp.toFixed()}&deg;/
+                    {item.list[19].main.temp.toFixed()}&deg;
+                  </div>
+                  <div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${item.list[15].weather[0].icon}@2x.png`}
+                      alt=""
+                    />
+                  </div>
+                  <div>{item.list[15].weather[0].description}</div>
                 </div>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${item.list[7].weather[0].icon}@2x.png`}
-                    alt=""
-                  />
+                <div className="expand__list__item">
+                  <div>{moment(item.list[23].dt_txt).format("dddd")}</div>
+                  <div>
+                    {item.list[23].main.temp.toFixed()}&deg;/
+                    {item.list[27].main.temp.toFixed()}&deg;
+                  </div>
+                  <div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${item.list[23].weather[0].icon}@2x.png`}
+                      alt=""
+                    />
+                  </div>
+                  <div>{item.list[23].weather[0].description}</div>
                 </div>
-                <div>{item.list[7].weather[0].description}</div>
-              </div>
-              <div className="expand__item">
-                <div>{moment(item.list[15].dt_txt).format("dddd")}</div>
-                <div>
-                  {item.list[15].main.temp.toFixed()}&deg;/
-                  {item.list[19].main.temp.toFixed()}&deg;
+                <div className="expand__list__item">
+                  <div>{moment(item.list[31].dt_txt).format("dddd")}</div>
+                  <div>
+                    {item.list[31].main.temp.toFixed()}&deg;/
+                    {item.list[35].main.temp.toFixed()}&deg;
+                  </div>
+                  <div>
+                    <img
+                      src={`http://openweathermap.org/img/wn/${item.list[31].weather[0].icon}@2x.png`}
+                      alt=""
+                    />
+                  </div>
+                  <div>{item.list[31].weather[0].description}</div>
                 </div>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${item.list[15].weather[0].icon}@2x.png`}
-                    alt=""
-                  />
-                </div>
-                <div>{item.list[15].weather[0].description}</div>
-              </div>
-              <div className="expand__item">
-                <div>{moment(item.list[23].dt_txt).format("dddd")}</div>
-                <div>
-                  {item.list[23].main.temp.toFixed()}&deg;/
-                  {item.list[27].main.temp.toFixed()}&deg;
-                </div>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${item.list[23].weather[0].icon}@2x.png`}
-                    alt=""
-                  />
-                </div>
-                <div>{item.list[23].weather[0].description}</div>
-              </div>
-              <div className="expand__item">
-                <div>{moment(item.list[31].dt_txt).format("dddd")}</div>
-                <div>
-                  {item.list[31].main.temp.toFixed()}&deg;/
-                  {item.list[35].main.temp.toFixed()}&deg;
-                </div>
-                <div>
-                  <img
-                    src={`http://openweathermap.org/img/wn/${item.list[31].weather[0].icon}@2x.png`}
-                    alt=""
-                  />
-                </div>
-                <div>{item.list[31].weather[0].description}</div>
-              </div>
+              </ul>
             </div>
           );
         })}
         {this.state.imageResp.map(i => {
-          return(
-            <img src={`${i.results[0].urls.regular}`} alt='' className="expand__bg" key={i.results[0].id}/>
-          )
-        })
-        }
+          console.log(this.state.imageResp)
+          return (
+            <img
+              src={`${i.results[0].urls.regular}`}
+              alt=""
+              className="expand__bg"
+              key={i.results[0].id}
+            />
+          );
+        })}
       </div>
     );
   }
 }
-
-export default Expand;

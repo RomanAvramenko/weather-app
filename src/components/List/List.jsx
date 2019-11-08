@@ -1,31 +1,23 @@
 import React from "react";
 import axios from "axios";
-
 import { Link } from "react-router-dom";
 
-import GeolocationItem from "../GeolocationItem/GeolocationItem.jsx";
+import GeolocationItem from "../geolocation-item";
 
-import "./List.scss";
+import "./list.scss";
 
-class List extends React.Component {
-  constructor() {
-    super();
-    this.state = {
+export default class List extends React.Component {
+  state = {
       items: [],
       currentItem: "",
       response: []
     };
-    this.addItem = this.addItem.bind(this);
-    this.updateInput = this.updateInput.bind(this);
-    this.deleteItem = this.deleteItem.bind(this);
-    this.request = this.request.bind(this);
-  }
 
   componentDidMount() {
     this.hydrateStateWithLocalStorage();
     window.addEventListener(
       "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage
     );
     this.request();
   }
@@ -57,13 +49,13 @@ class List extends React.Component {
   componentWillUnmount() {
     window.removeEventListener(
       "beforeunload",
-      this.saveStateToLocalStorage.bind(this)
+      this.saveStateToLocalStorage
     );
 
     this.saveStateToLocalStorage();
   }
 
-  hydrateStateWithLocalStorage() {
+  hydrateStateWithLocalStorage = () => {
     if (localStorage.hasOwnProperty("response")) {
       let value = localStorage.getItem("response");
       try {
@@ -77,13 +69,13 @@ class List extends React.Component {
     }
   }
 
-  saveStateToLocalStorage() {
+  saveStateToLocalStorage = () => {
     for (let id in this.state) {
       localStorage.setItem(id, JSON.stringify(this.state[id]));
     }
   }
 
-  request() {
+  request = () => {
     this.state.items.forEach(item => {
       axios
         .get(
@@ -104,22 +96,21 @@ class List extends React.Component {
     });
   }
 
-  updateInput(e) {
-    const itemText = e.target.value;
-    const lowerCaseText = itemText.toLowerCase();
+  updateInput = (e) => {
+    const itemText = e.target.value.toLowerCase();
     const currentItem = {
-      text: lowerCaseText
+      text: itemText
     };
     this.setState({
       currentItem
     });
   }
 
-  addItem(e) {
+  addItem = (e) => {
     const newItem = this.state.currentItem;
-    let index = this.state.items
+    const index = this.state.response
       .map(e => {
-        return e.text;
+        return e.name.toLowerCase();
       })
       .indexOf(newItem.text);
     if (newItem.text !== "" && index === -1) {
@@ -137,7 +128,7 @@ class List extends React.Component {
     e.preventDefault();
   }
 
-  deleteItem(id) {
+  deleteItem = (id) => {
     this.setState({
       response: this.state.response.filter(el => el.id !== id)
     });
@@ -207,5 +198,3 @@ class List extends React.Component {
     );
   }
 }
-
-export default List;

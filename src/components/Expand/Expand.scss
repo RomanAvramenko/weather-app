@@ -7,30 +7,42 @@
 body {
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
 }
 
 .expand {
-    display: flex;
-    flex-direction: row;
+
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-stretch: extra-condensed;
+    margin-top: 40px;
 
-    &__item {
-        margin: 10px;
-        height: 200px;
-        font-size: 15px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-weight: bold;
-        font-stretch: extra-condensed;
-        text-align: center;
-        align-content: space-between;
+    &__name {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: row;
+        margin-top: 40px;
+
+        &__item {
+            margin: 10px;
+            height: 200px;
+            font-size: 15px;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-stretch: extra-condensed;
+            text-align: center;
+            align-content: space-between;
+        }
     }
 
     &__bg {
         height: 400px;
         width: 400px;
+        display: flex;
+        margin: auto;
+        border-radius: 8px;
     }
 }
