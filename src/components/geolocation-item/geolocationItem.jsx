@@ -4,15 +4,20 @@ import "./geolocationItem.scss";
 import axios from "axios";
 
 export default class GeolocationItem extends React.Component {
-    state = {
-      geolocationResp: []
-    };
+  _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
+  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
+  state = {
+    geolocationResp: []
+  };
 
   componentDidMount() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        const lat = latitude.toFixed(5);
+        const lon = longitude.toFixed(5);
         axios
-          .get(`https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude.toFixed(5)}&lon=${position.coords.longitude.toFixed(5)}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`)
+          .get(`${this._apiBase}lat=${lat}&lon=${lon}&units=metric${this._apiKey}`)
           .then(result => {
             if (result.data) {
               this.setState({

@@ -13,10 +13,11 @@ export default class Expand extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    if (this.props.location.state) {
+    const state = this.props.location.state
+    if (state) {
       window.addEventListener(
         "beforeunload",
-        window.sessionStorage.setItem("key", this.props.location.state.name)
+        window.sessionStorage.setItem("key", state.name)
       );
     }
     const loadData = undefined;
@@ -25,14 +26,14 @@ export default class Expand extends React.Component {
         axios.get(
           `https://api.openweathermap.org/data/2.5/forecast?q=${
             loadData
-              ? this.props.location.state.name
+              ? state.name
               : window.sessionStorage.getItem("key")
           }&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
         ),
         axios.get(
           `https://api.unsplash.com/search/photos?client_id=12d2d6b1c85dfb2d161d77513660ad8cc333ac66ea4bedb36b7691096b4c3dad&page=1&query=${
             loadData
-              ? this.props.location.state.name
+              ? state.name
               : window.sessionStorage.getItem("key")
           } city`
         )
@@ -62,9 +63,10 @@ export default class Expand extends React.Component {
     return (
       <div>
         {this.state.expandForecast.map(item => {
+          const _imgUrl = "http://openweathermap.org/img/wn/";
           return (
             <div className="expand" key={item.city.id}>
-              <h1 className="expand__name">{item.city.name}</h1>
+              <h1 className="expand__name">{item.city.name.toUpperCase()}</h1>
               <ul className="expand__list">
                 <div className="expand__list__item">
                   <div>{moment(item.list[0].dt_txt).format("dddd")}</div>
@@ -74,7 +76,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
-                      src={`http://openweathermap.org/img/wn/${item.list[0].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${item.list[0].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
@@ -88,7 +90,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
-                      src={`http://openweathermap.org/img/wn/${item.list[7].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${item.list[7].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
@@ -102,7 +104,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
-                      src={`http://openweathermap.org/img/wn/${item.list[15].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${item.list[15].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
@@ -116,7 +118,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
-                      src={`http://openweathermap.org/img/wn/${item.list[23].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${item.list[23].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
@@ -130,7 +132,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
-                      src={`http://openweathermap.org/img/wn/${item.list[31].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${item.list[31].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
@@ -141,10 +143,10 @@ export default class Expand extends React.Component {
           );
         })}
         {this.state.imageResp.map(i => {
-          console.log(this.state.imageResp)
+          const randPicture = Math.floor(Math.random() * 10)
           return (
             <img
-              src={`${i.results[0].urls.regular}`}
+              src={`${i.results[randPicture].urls.regular}`}
               alt=""
               className="expand__bg"
               key={i.results[0].id}

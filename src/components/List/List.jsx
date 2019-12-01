@@ -7,50 +7,44 @@ import GeolocationItem from "../geolocation-item";
 import "./list.scss";
 
 export default class List extends React.Component {
+  _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
+  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
   state = {
-      items: [],
-      currentItem: "",
-      response: []
-    };
+    items: [],
+    currentItem: "",
+    response: []
+  };
 
   componentDidMount() {
     this.hydrateStateWithLocalStorage();
-    window.addEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage
-    );
+    window.addEventListener("beforeunload", this.saveStateToLocalStorage);
     this.request();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.items !== this.state.items) {
+    const { items } = this.state;
+    if (prevState.items !== items) {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${this.state.items[this.state.items.length - 1].text}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+          `${this._apiBase}q=${items[items.length - 1].text}&units=metric${this._apiKey}`
         )
         .then(response => {
           if (response.data) {
-            this.setState(
-              {
-                response: [...this.state.response, response.data]
-              },
-              () => console.log(this.state)
-            );
+            this.setState({
+              response: [...this.state.response, response.data]
+            });
           } else {
             console.error("Response is empty", response.data);
           }
         })
         .catch(e => {
-          console.log(e.config);
+          console.error(e.config);
         });
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener(
-      "beforeunload",
-      this.saveStateToLocalStorage
-    );
+    window.removeEventListener("beforeunload", this.saveStateToLocalStorage);
 
     this.saveStateToLocalStorage();
   }
@@ -60,26 +54,24 @@ export default class List extends React.Component {
       let value = localStorage.getItem("response");
       try {
         value = JSON.parse(value);
-        this.setState({ response: value }, () => {
-          console.log(this.state);
-        });
+        this.setState({ response: value });
       } catch (e) {
         console.error({ response: value });
       }
     }
-  }
+  };
 
   saveStateToLocalStorage = () => {
     for (let id in this.state) {
       localStorage.setItem(id, JSON.stringify(this.state[id]));
     }
-  }
+  };
 
   request = () => {
     this.state.items.forEach(item => {
       axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${item.text}&units=metric&APPID=f32f005175f0b009bc5e5052a9f9722c`
+          `${this._apiBase}q=${item.text}&units=metric${this._apiKey}`
         )
         .then(response => {
           if (response.data) {
@@ -94,9 +86,9 @@ export default class List extends React.Component {
           console.log(e.config);
         });
     });
-  }
+  };
 
-  updateInput = (e) => {
+  updateInput = e => {
     const itemText = e.target.value.toLowerCase();
     const currentItem = {
       text: itemText
@@ -104,36 +96,35 @@ export default class List extends React.Component {
     this.setState({
       currentItem
     });
-  }
+  };
 
-  addItem = (e) => {
+  addItem = e => {
     const newItem = this.state.currentItem;
     const index = this.state.response
       .map(e => {
         return e.name.toLowerCase();
       })
-      .indexOf(newItem.text);
-    if (newItem.text !== "" && index === -1) {
+      .includes(newItem.text);
+    if (newItem.text !== "" && index === false) {
       const items = [...this.state.items];
       items.push(newItem);
       this.setState(
         {
           items: items,
           currentItem: { text: "" }
-        },
-        () => console.log(this.state)
+        }
       );
     }
     e.target.reset();
     e.preventDefault();
-  }
+  };
 
-  deleteItem = (id) => {
+  deleteItem = id => {
     this.setState({
       response: this.state.response.filter(el => el.id !== id)
     });
     localStorage.removeItem(id);
-  }
+  };
 
   render() {
     return (
@@ -153,7 +144,7 @@ export default class List extends React.Component {
           </form>
           <ul className="theList">
             <GeolocationItem />
-            <div>
+            <React.Fragment>
               {this.state.response.map(item => {
                 return (
                   <li key={item.id} className="theListItem">
@@ -191,7 +182,7 @@ export default class List extends React.Component {
                   </li>
                 );
               })}
-            </div>
+            </React.Fragment>
           </ul>
         </div>
       </div>
