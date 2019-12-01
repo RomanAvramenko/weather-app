@@ -2,8 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./geolocationItem.scss";
 import axios from "axios";
+//import OpenWeatherService from "../../services/open-weather-service";
 
 export default class GeolocationItem extends React.Component {
+
+  //weatherService = new OpenWeatherService();
+
   _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
   _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
   state = {
@@ -16,8 +20,9 @@ export default class GeolocationItem extends React.Component {
         const { latitude, longitude } = position.coords;
         const lat = latitude.toFixed(5);
         const lon = longitude.toFixed(5);
+        const location = (`lat=${lat}&lon=${lon}`)
         axios
-          .get(`${this._apiBase}lat=${lat}&lon=${lon}&units=metric${this._apiKey}`)
+          .get(`${this._apiBase}${location}&units=metric${this._apiKey}`)
           .then(result => {
             if (result.data) {
               this.setState({
@@ -52,7 +57,7 @@ export default class GeolocationItem extends React.Component {
           <div className="geoLocItem__img">
             <img
               src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-              alt=""
+              alt={`${item.weather[0].description}`}
             />
           </div>
           <div className="geoLocItem__expand">

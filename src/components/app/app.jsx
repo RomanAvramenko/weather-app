@@ -8,14 +8,14 @@ import Expand from "../expand";
 
 const App = () => {
   return (
-    <div>
+    <React.Fragment>
       <Router>
         <Switch>
           <Route exact path="/" component={List} />
           <Route path="/expand" component={Expand} />
         </Switch>
       </Router>
-    </div>
+    </React.Fragment>
   );
 };
 
