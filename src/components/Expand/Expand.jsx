@@ -28,16 +28,16 @@ export default class Expand extends React.Component {
       .all([
         axios.get(
           `${this._apiBase}q=${
-            loadData
-              ? state.name
-              : window.sessionStorage.getItem("key")
+          loadData
+            ? state.name
+            : window.sessionStorage.getItem("key")
           }&units=metric${this._apiKey}`
         ),
         axios.get(
           `${this._unsplashApiBase}&page=1&query=${
-            loadData
-              ? state.name
-              : window.sessionStorage.getItem("key")
+          loadData
+            ? state.name
+            : window.sessionStorage.getItem("key")
           } city`
         )
       ])
@@ -67,6 +67,10 @@ export default class Expand extends React.Component {
       <div>
         {this.state.expandForecast.map(item => {
           const _imgUrl = "http://openweathermap.org/img/wn/";
+          //const currentDay = moment(item.list[0].dt_txt).format('dddd');
+          //item.list.map(date => {
+            //console.log(moment(date.dt_txt).format('LLLL').replace(/,.*$/));
+          //});
           return (
             <div className="expand" key={item.city.id}>
               <h1 className="expand__name">{item.city.name.toUpperCase()}</h1>
