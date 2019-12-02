@@ -69,7 +69,7 @@ export default class Expand extends React.Component {
           const _imgUrl = "http://openweathermap.org/img/wn/";
           //const currentDay = moment(item.list[0].dt_txt).format('dddd');
           //item.list.map(date => {
-            //console.log(moment(date.dt_txt).format('LLLL').replace(/,.*$/));
+          //console.log(moment(date.dt_txt).format('LLLL').replace(/,.*$/));
           //});
           return (
             <div className="expand" key={item.city.id}>
@@ -83,6 +83,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
+                      className="icon"
                       src={`${_imgUrl}${item.list[0].weather[0].icon}@2x.png`}
                       alt=""
                     />
@@ -97,6 +98,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
+                      className="icon"
                       src={`${_imgUrl}${item.list[7].weather[0].icon}@2x.png`}
                       alt=""
                     />
@@ -111,6 +113,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
+                      className="icon"
                       src={`${_imgUrl}${item.list[15].weather[0].icon}@2x.png`}
                       alt=""
                     />
@@ -125,6 +128,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
+                      className="icon"
                       src={`${_imgUrl}${item.list[23].weather[0].icon}@2x.png`}
                       alt=""
                     />
@@ -139,6 +143,7 @@ export default class Expand extends React.Component {
                   </div>
                   <div>
                     <img
+                      className="icon"
                       src={`${_imgUrl}${item.list[31].weather[0].icon}@2x.png`}
                       alt=""
                     />
@@ -150,14 +155,17 @@ export default class Expand extends React.Component {
           );
         })}
         {this.state.imageResp.map(i => {
-          const randPicture = Math.floor(Math.random() * 10)
+          const randPicture = Math.floor(Math.random() * 10);
+          const bgImage = {
+            backgroundImage: `url(${i.results[randPicture].urls.small})`
+          }
           return (
-            <img
-              src={`${i.results[randPicture].urls.regular}`}
-              alt=""
+            <div
               className="expand__bg"
               key={i.results[0].id}
-            />
+              style={bgImage}
+            >
+            </div>
           );
         })}
       </div>

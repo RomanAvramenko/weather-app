@@ -10,7 +10,6 @@ body {
 }
 
 .expand {
-
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     font-stretch: extra-condensed;
@@ -24,15 +23,12 @@ body {
     &__list {
         display: flex;
         flex-direction: row;
+        justify-content: center;
         margin-top: 40px;
 
         &__item {
             margin: 10px;
             height: 200px;
-            font-size: 15px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-weight: bold;
-            font-stretch: extra-condensed;
             text-align: center;
             align-content: space-between;
         }
@@ -44,5 +40,34 @@ body {
         display: flex;
         margin: auto;
         border-radius: 8px;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
+}
+
+@media (max-width: 640px) {
+    .expand {
+        margin: 0;
+
+        &__list {
+            font-size: 0.8em;
+            margin-top: 1em;
+
+            &__item {
+                margin: 0em;
+                height: 13em;
+                width: 6em;
+            }
+        }
+
+        &__bg {
+            width: 100vw;
+        }
+    }
+
+    .icon {
+        width: 7em;
+    }
+
+
 }

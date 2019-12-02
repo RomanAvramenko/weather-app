@@ -11,7 +11,7 @@ export default class GeolocationItem extends React.Component {
   _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
   _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
   state = {
-    geolocationResp: []
+    geolocationResp: [],
   };
 
   componentDidMount() {
