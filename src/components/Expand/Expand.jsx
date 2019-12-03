@@ -67,10 +67,13 @@ export default class Expand extends React.Component {
       <div>
         {this.state.expandForecast.map(item => {
           const _imgUrl = "http://openweathermap.org/img/wn/";
-          //const currentDay = moment(item.list[0].dt_txt).format('dddd');
-          //item.list.map(date => {
-          //console.log(moment(date.dt_txt).format('LLLL').replace(/,.*$/));
-          //});
+          /* const currentDay = moment(item.list[0].dt_txt).add(1, 'days').format('dddd');
+          item.list.map((date, index) => {
+            const days = moment(date.dt_txt).format('LLLL').replace(/,.*$/,'');
+            if (currentDay === days) {
+              return console.log(index);
+            }
+          }); */
           return (
             <div className="expand" key={item.city.id}>
               <h1 className="expand__name">{item.city.name.toUpperCase()}</h1>
