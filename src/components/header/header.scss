@@ -1,0 +1,32 @@
+.app {
+    text-align: center;
+}
+
+.app-logo {
+    display: flex;
+    flex-direction: row;
+
+    &__img {
+        background-image: url(./images/undraw_weather_app_i5sm.png);
+        background-size: cover;
+        height: 2.5em;
+        width: 2.5em;
+        margin: auto 1em;
+    }
+
+    &__link {
+        text-decoration: none;
+        color: white;
+        font-size: 2em;
+    }
+}
+
+.app-header {
+    background-color: #282c34;
+    width: 100vw;
+    height: 3em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}

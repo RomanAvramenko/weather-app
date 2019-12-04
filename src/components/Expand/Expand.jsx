@@ -56,7 +56,7 @@ export default class Expand extends React.Component {
         })
       )
       .catch(e => {
-        console.error(e.config);
+        console.log(e.config);
       });
   }
 
@@ -80,7 +80,6 @@ export default class Expand extends React.Component {
   }
 
   render() {
-    console.log(this.state.expandForecast);
     return (
       <div>
         {this.state.expandForecast.map(item => {
