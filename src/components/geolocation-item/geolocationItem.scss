@@ -1,25 +1,28 @@
 .geoLocItem {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    position: relative;
+    display: grid;
+    grid-template-columns: 1fr, 1fr;
+    grid-template-rows: 1fr, 1fr, 1fr;
+    justify-items: center;
+    grid-template-areas: 
+        "temp img"
+        "city ."
+        "link link"
+    ;
     &__temp {
-        position: absolute;
-        left: 50px;
-        top: 5px;
-        font-size: 72px;
+        grid-area: temp;
+        font-size: 3em;
         color: rgb(0, 0, 0)
     }
 
     &__img {
-        position: relative;
+        grid-area: img;
+        justify-self: start;
     }
     &__name {
-        position: absolute;
-        left: 55px;
-        top: 80px;
+        grid-area: city;
     }
     &__expand {
+        grid-area: link;
         text-decoration: none;
         color:rgb(0, 0, 0);
     }

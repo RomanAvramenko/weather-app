@@ -10,17 +10,24 @@ export default class ListItem extends React.Component {
             <React.Fragment>
                 {this.props.response.map(item => {
                     return (
-                        <li key={item.id} className="theListItem">
-                            <div className="theListItem__temp">
+                        <li key={item.id} className="list-item">
+                            <div className="list-item__temp">
                                 <span>{item.main.temp.toFixed()}&deg;</span>
                             </div>
-                            <div className="theListItem__img">
+                            <div className="list-item__img">
                                 <img
                                     src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
                                     alt=""
                                 />
                             </div>
-                            <div className="theListItem__name">
+                            <button
+                                className="list-item__btn"
+                                onClick={() => {
+                                    this.props.deleteItem(item.id);
+                                }}>
+                                &#10006;
+                            </button>
+                            <div className="list-item__name">
                                 <span>{item.name}</span>
                             </div>
                             <div>
@@ -29,19 +36,10 @@ export default class ListItem extends React.Component {
                                         pathname: "/expand",
                                         state: { name: item.name }
                                     }}
-                                    className="theListItem__expand"
-                                >
+                                    className="list-item__expand">
                                     Forecast for 5 days
-                            </Link>
+                                </Link>
                             </div>
-                            <button
-                                className="theListItem__btn"
-                                onClick={() => {
-                                    this.props.deleteItem(item.id);
-                                }}
-                            >
-                                &#10006;
-                    </button>
                         </li>
                     );
                 })}

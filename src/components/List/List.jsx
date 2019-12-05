@@ -128,26 +128,24 @@ export default class List extends React.Component {
 
   render() {
     return (
-      <div className="listMain">
-        <div className="header">
-          <form onSubmit={this.addItem}>
-            <label>
-              <input
-                type="text"
-                className="headerInput"
-                placeholder="Enter the City Name"
-                value={this.currentItem}
-                onChange={this.updateInput}
-              />
-            </label>
-            <input className="headerBtn" type="submit" value="Add City" />
-          </form>
-          <ul className="theList">
-            <GeolocationItem />
-            <ListItem response={this.state.response}
-                      deleteItem={this.deleteItem}/>
-          </ul>
-        </div>
+      <div className="box">
+        <form className="box__form" onSubmit={this.addItem}>
+          <label>
+            <input
+              type="text"
+              className="box__form__input"
+              placeholder="City Name"
+              value={this.currentItem}
+              onChange={this.updateInput}
+            />
+          </label>
+          <input className="box__form__btn" type="submit" value="Add" />
+        </form>
+        <ul className="box__list">
+          <GeolocationItem />
+          <ListItem response={this.state.response}
+            deleteItem={this.deleteItem} />
+        </ul>
       </div>
     );
   }
