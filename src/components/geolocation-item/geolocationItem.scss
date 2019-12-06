@@ -1,12 +1,11 @@
 .geoLocItem {
     display: grid;
     grid-template-columns: 1fr, 1fr;
-    grid-template-rows: 1fr, 1fr, 1fr;
+    grid-template-rows: 1fr, 1fr;
     justify-items: center;
     grid-template-areas: 
         "temp img"
-        "city ."
-        "link link"
+        "city link"
     ;
     &__temp {
         grid-area: temp;
@@ -16,7 +15,7 @@
 
     &__img {
         grid-area: img;
-        justify-self: start;
+        justify-self: center;
     }
     &__name {
         grid-area: city;

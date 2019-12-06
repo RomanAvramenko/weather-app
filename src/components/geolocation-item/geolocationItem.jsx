@@ -2,14 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./geolocationItem.scss";
 import axios from "axios";
+import {URL_WEATHER, API_KEY_OW} from "../../constants";
 //import OpenWeatherService from "../../services/open-weather-service";
 
 export default class GeolocationItem extends React.Component {
 
   //weatherService = new OpenWeatherService();
 
-  _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
-  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
   state = {
     geolocationResp: [],
   };
@@ -22,7 +21,7 @@ export default class GeolocationItem extends React.Component {
         const lon = longitude.toFixed(5);
         const location = (`lat=${lat}&lon=${lon}`)
         axios
-          .get(`${this._apiBase}${location}&units=metric${this._apiKey}`)
+          .get(`${URL_WEATHER}${location}&units=metric${API_KEY_OW}`)
           .then(result => {
             if (result.data) {
               this.setState({

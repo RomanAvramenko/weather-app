@@ -1,13 +1,11 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
+import {URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US} from "../../constants"
 
 import "./expand.scss";
 
 export default class Expand extends React.Component {
-  _apiBase = "https://api.openweathermap.org/data/2.5/forecast?";
-  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
-  _unsplashApiBase = "https://api.unsplash.com/search/photos?client_id=12d2d6b1c85dfb2d161d77513660ad8cc333ac66ea4bedb36b7691096b4c3dad"
   _isMounted = false;
   state = {
     expandForecast: [],
@@ -28,14 +26,14 @@ export default class Expand extends React.Component {
     axios
       .all([
         axios.get(
-          `${this._apiBase}q=${
+          `${URL_FORECAST}q=${
           loadData
             ? state.name
             : window.sessionStorage.getItem("key")
-          }&units=metric${this._apiKey}`
+          }&units=metric${API_KEY_OW}`
         ),
         axios.get(
-          `${this._unsplashApiBase}&page=1&query=${
+          `${URL_IMAGE + API_KEY_US}&page=1&query=${
           loadData
             ? state.name
             : window.sessionStorage.getItem("key")

@@ -1,14 +1,11 @@
 import React from "react";
 import axios from "axios";
-
-
 import GeolocationItem from "../geolocation-item";
 import ListItem from '../list-item';
+import {URL_WEATHER, API_KEY_OW} from "../../constants";
 import "./list.scss";
 
 export default class List extends React.Component {
-  _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
-  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
   state = {
     items: [],
     currentItem: "",
@@ -26,7 +23,7 @@ export default class List extends React.Component {
     if (prevState.items !== items) {
       axios
         .get(
-          `${this._apiBase}q=${items[items.length - 1].text}&units=metric${this._apiKey}`
+          `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`
         )
         .then(response => {
           if (response.data) {
@@ -71,7 +68,7 @@ export default class List extends React.Component {
     this.state.items.forEach(item => {
       axios
         .get(
-          `${this._apiBase}q=${item.text}&units=metric${this._apiKey}`
+          `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
         )
         .then(response => {
           if (response.data) {
