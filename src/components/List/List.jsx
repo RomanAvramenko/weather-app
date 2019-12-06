@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import GeolocationItem from "../geolocation-item";
 import ListItem from '../list-item';
-import {URL_WEATHER, API_KEY_OW} from "../../constants";
+import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import "./list.scss";
 
 export default class List extends React.Component {
@@ -21,28 +21,16 @@ export default class List extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { items } = this.state;
     if (prevState.items !== items) {
+      const url = `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`;
       axios
-        .get(
-          `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`
-        )
-        .then(response => {
-          if (response.data) {
-            this.setState({
-              response: [...this.state.response, response.data]
-            });
-          } else {
-            console.error("Response is empty", response.data);
-          }
-        })
-        .catch(e => {
-          console.error(e.config);
-        });
+        .get(url)
+        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .catch(e => { console.error(e.config) });
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener("beforeunload", this.saveStateToLocalStorage);
-
     this.saveStateToLocalStorage();
   }
 
@@ -66,22 +54,11 @@ export default class List extends React.Component {
 
   request = () => {
     this.state.items.forEach(item => {
+      const url = `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
       axios
-        .get(
-          `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
-        )
-        .then(response => {
-          if (response.data) {
-            this.setState({
-              response: [...this.state.response, response.data]
-            });
-          } else {
-            console.error("Response is empty", response.data);
-          }
-        })
-        .catch(e => {
-          console.log(e.config);
-        });
+        .get(url)
+        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .catch(e => { console.log(e.config); });
     });
   };
 
@@ -98,9 +75,7 @@ export default class List extends React.Component {
   addItem = e => {
     const newItem = this.state.currentItem;
     const index = this.state.response
-      .map(e => {
-        return e.name.toLowerCase();
-      })
+      .map(e => {return e.name.toLowerCase()})
       .includes(newItem.text);
     if (newItem.text !== "" && index === false) {
       const items = [...this.state.items];

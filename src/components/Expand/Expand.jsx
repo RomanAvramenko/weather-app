@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
-import {URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US} from "../../constants"
+import { URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US } from "../../constants"
 
 import "./expand.scss";
 
@@ -42,15 +42,11 @@ export default class Expand extends React.Component {
       ])
       .then(
         axios.spread((result, imgResp) => {
-          if (result.data || this._isMounted) {
-            this.setState({
-              expandForecast: [...this.state.expandForecast, result.data],
-              imageResp: [...this.state.imageResp, imgResp.data]
-            });
-            this.stateParser()
-          } else {
-            console.error("Response is empty", result.data);
-          }
+          this.setState({
+            expandForecast: [...this.state.expandForecast, result.data],
+            imageResp: [...this.state.imageResp, imgResp.data]
+          });
+          this.stateParser()
         })
       )
       .catch(e => {

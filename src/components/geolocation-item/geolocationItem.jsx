@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./geolocationItem.scss";
 import axios from "axios";
-import {URL_WEATHER, API_KEY_OW} from "../../constants";
+import { URL_WEATHER, API_KEY_OW } from "../../constants";
 //import OpenWeatherService from "../../services/open-weather-service";
 
 export default class GeolocationItem extends React.Component {
@@ -19,24 +19,14 @@ export default class GeolocationItem extends React.Component {
         const { latitude, longitude } = position.coords;
         const lat = latitude.toFixed(5);
         const lon = longitude.toFixed(5);
-        const location = (`lat=${lat}&lon=${lon}`)
+        const location = (`lat=${lat}&lon=${lon}`);
+        const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
         axios
-          .get(`${URL_WEATHER}${location}&units=metric${API_KEY_OW}`)
+          .get(url)
           .then(result => {
-            if (result.data) {
-              this.setState({
-                geolocationResp: [
-                  ...this.state.geolocationResp,
-                  result.data
-                ]
-              });
-            } else {
-              console.error("Response is empty", result);
-            }
+            this.setState({ geolocationResp: [...this.state.geolocationResp, result.data] })
           })
-          .catch(e => {
-            console.log(e.config);
-          });
+          .catch(e => { console.log(e.config) });
       });
     } else {
       console.error("Geolocation is not require");
