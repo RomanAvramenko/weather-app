@@ -17,7 +17,7 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #93dbe9;
+    background: #6C63FF;
     animation: ldio-vlyhr5uqnrp 1s linear infinite;
 }
 
@@ -112,9 +112,9 @@
 .loadingio-spinner-spin-brk9mq9ifn {
     width: 200px;
     height: 200px;
-    display: inline-block;
     overflow: hidden;
-    background: #f1f2f3;
+    background: #D8D8D8;
+    margin: 0 auto;
 }
 
 .ldio-vlyhr5uqnrp {

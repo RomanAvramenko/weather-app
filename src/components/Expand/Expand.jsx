@@ -1,6 +1,7 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
+import Spinner from "../spinner";
 import { URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US } from "../../constants"
 
 import "./expand.scss";
@@ -10,11 +11,20 @@ export default class Expand extends React.Component {
   state = {
     expandForecast: [],
     imageResp: [],
-    parsedData: []
+    parsedData: [],
+    loading: true
   };
 
   componentDidMount() {
     this._isMounted = true;
+    this.getData()
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  async getData() {
     const state = this.props.location.state
     if (state) {
       window.addEventListener(
@@ -23,28 +33,20 @@ export default class Expand extends React.Component {
       );
     }
     const loadData = undefined;
-    axios
+    const stateCheck = loadData ? state.name : window.sessionStorage.getItem("key");
+    const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
+    const urlImage = `${URL_IMAGE + API_KEY_US}&page=1&query=${stateCheck} city`;
+    await axios
       .all([
-        axios.get(
-          `${URL_FORECAST}q=${
-          loadData
-            ? state.name
-            : window.sessionStorage.getItem("key")
-          }&units=metric${API_KEY_OW}`
-        ),
-        axios.get(
-          `${URL_IMAGE + API_KEY_US}&page=1&query=${
-          loadData
-            ? state.name
-            : window.sessionStorage.getItem("key")
-          } city`
-        )
+        axios.get(urlWeather),
+        axios.get(urlImage)
       ])
       .then(
         axios.spread((result, imgResp) => {
           this.setState({
             expandForecast: [...this.state.expandForecast, result.data],
-            imageResp: [...this.state.imageResp, imgResp.data]
+            imageResp: [...this.state.imageResp, imgResp.data],
+            loading: false,
           });
           this.stateParser()
         })
@@ -52,10 +54,6 @@ export default class Expand extends React.Component {
       .catch(e => {
         console.log(e.config);
       });
-  }
-
-  componentWillUnmount() {
-    this._isMounted = false;
   }
 
   stateParser = () => {
@@ -74,12 +72,14 @@ export default class Expand extends React.Component {
   }
 
   render() {
-    console.log(this.state.expandForecast);
+    if (this.state.loading) {
+      return (
+        <Spinner/>
+      );
+    }
     return (
       <div>
         {this.state.expandForecast.map(item => {
-          console.log(item.list); // ????
-          console.log(item.list[0]); // how may it possible?
           const _imgUrl = "http://openweathermap.org/img/wn/";
           return (
             <div className="expand" key={item.city.id}>

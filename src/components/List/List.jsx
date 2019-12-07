@@ -9,7 +9,7 @@ export default class List extends React.Component {
   state = {
     items: [],
     currentItem: "",
-    response: []
+    response: [],
   };
 
   componentDidMount() {
@@ -24,7 +24,7 @@ export default class List extends React.Component {
       const url = `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`;
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .then(response => { this.setState({ response: [...this.state.response, response.data]}) })
         .catch(e => { console.error(e.config) });
     }
   }
@@ -57,7 +57,7 @@ export default class List extends React.Component {
       const url = `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .then(response => { this.setState({ response: [...this.state.response, response.data]}) })
         .catch(e => { console.log(e.config); });
     });
   };

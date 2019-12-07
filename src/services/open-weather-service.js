@@ -1,12 +1,10 @@
 import axios from "axios";
+import { URL_WEATHER, API_KEY_OW } from "../constants";
 
 export default class OpenWeatherService {
-  _apiBase = "https://api.openweathermap.org/data/2.5/weather?";
-  _apiKey = "&APPID=f32f005175f0b009bc5e5052a9f9722c";
-
-  getResource = url => {
-    axios
-      .get(`${this._apiBase}${url}&units=metric${this._apiKey}`)
+  getResource = async url => {
+    await axios
+      .get(`${URL_WEATHER}${url}&units=metric${API_KEY_OW}`)
       .then(result => {
         if (result.data) {
           this._transformWeather(result.data)
@@ -25,6 +23,7 @@ export default class OpenWeatherService {
   };
 
   _transformWeather = city => {
+    console.log(city)
     return {
       id: city.id,
       name: city.name,
