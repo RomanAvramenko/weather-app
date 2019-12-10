@@ -24,7 +24,7 @@ export default class List extends React.Component {
       const url = `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`;
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data]}) })
+        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
         .catch(e => { console.error(e.config) });
     }
   }
@@ -57,7 +57,7 @@ export default class List extends React.Component {
       const url = `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data]}) })
+        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
         .catch(e => { console.log(e.config); });
     });
   };
@@ -75,7 +75,7 @@ export default class List extends React.Component {
   addItem = e => {
     const newItem = this.state.currentItem;
     const index = this.state.response
-      .map(e => {return e.name.toLowerCase()})
+      .map(e => { return e.name.toLowerCase() })
       .includes(newItem.text);
     if (newItem.text !== "" && index === false) {
       const items = [...this.state.items];

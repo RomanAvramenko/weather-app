@@ -9,10 +9,9 @@ import "./expand.scss";
 export default class Expand extends React.Component {
   _isMounted = false;
   state = {
-    expandForecast: [],
+    expandForecast: null,
     imageResp: [],
     parsedData: [],
-    loading: true
   };
 
   componentDidMount() {
@@ -44,9 +43,8 @@ export default class Expand extends React.Component {
       .then(
         axios.spread((result, imgResp) => {
           this.setState({
-            expandForecast: [...this.state.expandForecast, result.data],
+            expandForecast: this._transformData(result),
             imageResp: [...this.state.imageResp, imgResp.data],
-            loading: false,
           });
           this.stateParser()
         })
@@ -56,114 +54,118 @@ export default class Expand extends React.Component {
       });
   }
 
-  stateParser = () => {
-    this.state.expandForecast.map(item => {
-      const currentDay = item.list[0].dt_txt.replace(/ .*$/, '');
-      item.list.map((date) => {
-        const days = date.dt_txt.replace(/ .*$/, '');
-        if (currentDay === days) {
-          item.list.splice(0, 2)
-        }
-        return date;
-      });
-      this.setState({ expandForecast: [...this.state.expandForecast[0], item.list] });
-      return item;
-    })
+  _transformData = (result) => {
+    return {
+      id: result.data.city.id,
+      name: result.data.city.name,
+      list: this.stateParser(result.data.list)
+    }
+  }
+
+  stateParser = (list) => {
+    const currentDay = list[0].dt_txt.replace(/ .*$/, '');
+    list.map(item => {
+      const days = item.dt_txt.replace(/ .*$/, '');
+      if (currentDay === days) {
+        list.splice(0, 1);
+      }
+      return days;
+    });
+    return list;
   }
 
   render() {
-    if (this.state.loading) {
+    if (this.state.expandForecast === null) {
       return (
-        <Spinner/>
+        <Spinner />
       );
     }
+
+    const { id, name, list } = this.state.expandForecast;
+    console.log(list)
+    const _imgUrl = "http://openweathermap.org/img/wn/";
     return (
       <div>
-        {this.state.expandForecast.map(item => {
-          const _imgUrl = "http://openweathermap.org/img/wn/";
-          return (
-            <div className="expand" key={item.city.id}>
-              <h1 className="expand__name">{item.city.name.toUpperCase()}</h1>
-              <ul className="expand__list">
+        <div className="expand" key={id}>
+          <h1 className="expand__name">{name.toUpperCase()}</h1>
+          <ul className="expand__list">
                 <div className="expand__list__item">
-                  <div>{moment(item.list[0].dt_txt).format("dddd")}</div>
+                  <div>{moment(list[0].dt_txt).format("dddd")}</div>
                   <div>
-                    {item.list[0].main.temp.toFixed()}&deg;/
-                    {item.list[4].main.temp.toFixed()}&deg;
+                    {list[0].main.temp.toFixed()}&deg;/
+                    {list[4].main.temp.toFixed()}&deg;
                   </div>
                   <div>
                     <img
                       className="icon"
-                      src={`${_imgUrl}${item.list[4].weather[0].icon}@2x.png`}
+                      src={`${_imgUrl}${list[4].weather[0].icon}@2x.png`}
                       alt=""
                     />
                   </div>
-                  <div>{item.list[4].weather[0].description}</div>
+                  <div>{list[4].weather[0].description}</div>
                 </div>
-                <div className="expand__list__item">
-                  <div>{moment(item.list[8].dt_txt).format("dddd")}</div>
-                  <div>
-                    {item.list[8].main.temp.toFixed()}&deg;/
+            {/* <div className="expand__list__item">
+              <div>{moment(item.list[8].dt_txt).format("dddd")}</div>
+              <div>
+                {item.list[8].main.temp.toFixed()}&deg;/
                     {item.list[12].main.temp.toFixed()}&deg;
                   </div>
-                  <div>
-                    <img
-                      className="icon"
-                      src={`${_imgUrl}${item.list[12].weather[0].icon}@2x.png`}
-                      alt=""
-                    />
-                  </div>
-                  <div>{item.list[12].weather[0].description}</div>
-                </div>
-                <div className="expand__list__item">
-                  <div>{moment(item.list[16].dt_txt).format("dddd")}</div>
-                  <div>
-                    {item.list[16].main.temp.toFixed()}&deg;/
+              <div>
+                <img
+                  className="icon"
+                  src={`${_imgUrl}${item.list[12].weather[0].icon}@2x.png`}
+                  alt=""
+                />
+              </div>
+              <div>{item.list[12].weather[0].description}</div>
+            </div>
+            <div className="expand__list__item">
+              <div>{moment(item.list[16].dt_txt).format("dddd")}</div>
+              <div>
+                {item.list[16].main.temp.toFixed()}&deg;/
                     {item.list[20].main.temp.toFixed()}&deg;
                   </div>
-                  <div>
-                    <img
-                      className="icon"
-                      src={`${_imgUrl}${item.list[20].weather[0].icon}@2x.png`}
-                      alt=""
-                    />
-                  </div>
-                  <div>{item.list[20].weather[0].description}</div>
-                </div>
-                <div className="expand__list__item">
-                  <div>{moment(item.list[24].dt_txt).format("dddd")}</div>
-                  <div>
-                    {item.list[24].main.temp.toFixed()}&deg;/
+              <div>
+                <img
+                  className="icon"
+                  src={`${_imgUrl}${item.list[20].weather[0].icon}@2x.png`}
+                  alt=""
+                />
+              </div>
+              <div>{item.list[20].weather[0].description}</div>
+            </div>
+            <div className="expand__list__item">
+              <div>{moment(item.list[24].dt_txt).format("dddd")}</div>
+              <div>
+                {item.list[24].main.temp.toFixed()}&deg;/
                     {item.list[28].main.temp.toFixed()}&deg;
                   </div>
-                  <div>
-                    <img
-                      className="icon"
-                      src={`${_imgUrl}${item.list[28].weather[0].icon}@2x.png`}
-                      alt=""
-                    />
-                  </div>
-                  <div>{item.list[28].weather[0].description}</div>
-                </div>
-                <div className="expand__list__item">
-                  <div>{moment(item.list[32].dt_txt).format("dddd")}</div>
-                  <div>
-                    {item.list[32].main.temp.toFixed()}&deg;/
+              <div>
+                <img
+                  className="icon"
+                  src={`${_imgUrl}${item.list[28].weather[0].icon}@2x.png`}
+                  alt=""
+                />
+              </div>
+              <div>{item.list[28].weather[0].description}</div>
+            </div>
+            <div className="expand__list__item">
+              <div>{moment(item.list[32].dt_txt).format("dddd")}</div>
+              <div>
+                {item.list[32].main.temp.toFixed()}&deg;/
                     {item.list[36].main.temp.toFixed()}&deg;
                   </div>
-                  <div>
-                    <img
-                      className="icon"
-                      src={`${_imgUrl}${item.list[36].weather[0].icon}@2x.png`}
-                      alt=""
-                    />
-                  </div>
-                  <div>{item.list[36].weather[0].description}</div>
-                </div>
-              </ul>
-            </div>
-          );
-        })}
+              <div>
+                <img
+                  className="icon"
+                  src={`${_imgUrl}${item.list[36].weather[0].icon}@2x.png`}
+                  alt=""
+                />
+              </div>
+              <div>{item.list[36].weather[0].description}</div>
+            </div> */}
+          </ul>
+        </div>
         {this.state.imageResp.map(i => {
           const randPicture = Math.floor(Math.random() * 10);
           const bgImage = {
