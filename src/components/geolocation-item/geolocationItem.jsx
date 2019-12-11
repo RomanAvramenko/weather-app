@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./geolocationItem.scss";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
+import Spinner from "../spinner";
 //import OpenWeatherService from "../../services/open-weather-service";
 
 export default class GeolocationItem extends React.Component {
@@ -10,7 +11,7 @@ export default class GeolocationItem extends React.Component {
   //weatherService = new OpenWeatherService();
 
   state = {
-    geolocationResp: [],
+    geolocationResp: null,
   };
 
   componentDidMount() {
@@ -24,7 +25,7 @@ export default class GeolocationItem extends React.Component {
         axios
           .get(url)
           .then(result => {
-            this.setState({ geolocationResp: [...this.state.geolocationResp, result.data] })
+            this.setState({ geolocationResp: this._transformData(result) })
           })
           .catch(e => { console.log(e.config) });
       });
@@ -33,35 +34,50 @@ export default class GeolocationItem extends React.Component {
     }
   }
 
+  _transformData = (result) => {
+    return {
+      id: result.data.id,
+      name: result.data.name,
+      temp: result.data.main.temp.toFixed(),
+      icon: result.data.weather[0].icon,
+      desc: result.data.weather[0].description
+    }
+  }
+
   render() {
-    return this.state.geolocationResp.map(item => {
+    if (this.state.geolocationResp === null) {
       return (
-        <li key={item.id} className="geoLocItem">
-          <div className="geoLocItem__temp">
-            <span>{item.main.temp.toFixed()}&deg;</span>
-          </div>
-          <div className="geoLocItem__name">
-            <span>{item.name}</span>
-          </div>
-          <div className="geoLocItem__img">
-            <img
-              src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-              alt={`${item.weather[0].description}`}
-            />
-          </div>
-          <div className="geoLocItem__expand">
-            <Link
-              to={{
-                pathname: "/expand",
-                state: { name: item.name }
-              }}
-              className="geoLocItem__expand"
-            >
-              Forecast for 5 days
-            </Link>
-          </div>
-        </li>
+        <Spinner />
       );
-    });
+    }
+    const { id, name, temp, icon, desc } = this.state.geolocationResp;
+    return (
+      <li key={id} className="geoLocItem">
+        <div className="geoLocItem__temp">
+          <span>{temp}&deg;</span>
+        </div>
+        <div className="geoLocItem__name">
+          <span>{name}</span>
+        </div>
+        <div className="geoLocItem__img">
+          <img
+            src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+            alt={`${desc}`}
+          />
+        </div>
+        <div className="geoLocItem__expand">
+          <Link
+            to={{
+              pathname: "/expand",
+              state: { name: name }
+            }}
+            className="geoLocItem__expand"
+          >
+            Forecast for 5 days
+            </Link>
+        </div>
+      </li>
+    );
+
   }
 }

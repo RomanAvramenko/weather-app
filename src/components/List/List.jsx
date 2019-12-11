@@ -57,10 +57,20 @@ export default class List extends React.Component {
       const url = `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .then(result => { this.setState({ response: this._transformData(result) }) })
         .catch(e => { console.log(e.config); });
     });
   };
+
+  _transformData = (result) => {
+    return {
+      id: result.data.id,
+      name: result.data.name,
+      temp: result.data.main.temp.toFixed(),
+      icon: result.data.weather[0].icon,
+      desc: result.data.weather[0].description
+    }
+  }
 
   updateInput = e => {
     const itemText = e.target.value.toLowerCase();

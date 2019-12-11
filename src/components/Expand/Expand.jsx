@@ -34,7 +34,7 @@ export default class Expand extends React.Component {
     const loadData = undefined;
     const stateCheck = loadData ? state.name : window.sessionStorage.getItem("key");
     const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
-    const urlImage = `${URL_IMAGE + API_KEY_US}&page=1&query=${stateCheck} city`;
+    const urlImage = `${URL_IMAGE + API_KEY_US}&page=1&query=${stateCheck} city buildings`;
     await axios
       .all([
         axios.get(urlWeather),
@@ -82,88 +82,87 @@ export default class Expand extends React.Component {
     }
 
     const { id, name, list } = this.state.expandForecast;
-    console.log(list)
     const _imgUrl = "http://openweathermap.org/img/wn/";
     return (
       <div>
         <div className="expand" key={id}>
           <h1 className="expand__name">{name.toUpperCase()}</h1>
           <ul className="expand__list">
-                <div className="expand__list__item">
-                  <div>{moment(list[0].dt_txt).format("dddd")}</div>
-                  <div>
-                    {list[0].main.temp.toFixed()}&deg;/
+            <div className="expand__list__item">
+              <div>{moment(list[0].dt_txt).format("dddd")}</div>
+              <div>
+                {list[0].main.temp.toFixed()}&deg;/
                     {list[4].main.temp.toFixed()}&deg;
                   </div>
-                  <div>
-                    <img
-                      className="icon"
-                      src={`${_imgUrl}${list[4].weather[0].icon}@2x.png`}
-                      alt=""
-                    />
-                  </div>
-                  <div>{list[4].weather[0].description}</div>
-                </div>
-            {/* <div className="expand__list__item">
-              <div>{moment(item.list[8].dt_txt).format("dddd")}</div>
-              <div>
-                {item.list[8].main.temp.toFixed()}&deg;/
-                    {item.list[12].main.temp.toFixed()}&deg;
-                  </div>
               <div>
                 <img
                   className="icon"
-                  src={`${_imgUrl}${item.list[12].weather[0].icon}@2x.png`}
+                  src={`${_imgUrl}${list[4].weather[0].icon}@2x.png`}
                   alt=""
                 />
               </div>
-              <div>{item.list[12].weather[0].description}</div>
+              <div>{list[4].weather[0].description}</div>
             </div>
             <div className="expand__list__item">
-              <div>{moment(item.list[16].dt_txt).format("dddd")}</div>
+              <div>{moment(list[8].dt_txt).format("dddd")}</div>
               <div>
-                {item.list[16].main.temp.toFixed()}&deg;/
-                    {item.list[20].main.temp.toFixed()}&deg;
+                {list[8].main.temp.toFixed()}&deg;/
+                    {list[12].main.temp.toFixed()}&deg;
                   </div>
               <div>
                 <img
                   className="icon"
-                  src={`${_imgUrl}${item.list[20].weather[0].icon}@2x.png`}
+                  src={`${_imgUrl}${list[12].weather[0].icon}@2x.png`}
                   alt=""
                 />
               </div>
-              <div>{item.list[20].weather[0].description}</div>
+              <div>{list[12].weather[0].description}</div>
             </div>
             <div className="expand__list__item">
-              <div>{moment(item.list[24].dt_txt).format("dddd")}</div>
+              <div>{moment(list[16].dt_txt).format("dddd")}</div>
               <div>
-                {item.list[24].main.temp.toFixed()}&deg;/
-                    {item.list[28].main.temp.toFixed()}&deg;
+                {list[16].main.temp.toFixed()}&deg;/
+                    {list[20].main.temp.toFixed()}&deg;
                   </div>
               <div>
                 <img
                   className="icon"
-                  src={`${_imgUrl}${item.list[28].weather[0].icon}@2x.png`}
+                  src={`${_imgUrl}${list[20].weather[0].icon}@2x.png`}
                   alt=""
                 />
               </div>
-              <div>{item.list[28].weather[0].description}</div>
+              <div>{list[20].weather[0].description}</div>
             </div>
             <div className="expand__list__item">
-              <div>{moment(item.list[32].dt_txt).format("dddd")}</div>
+              <div>{moment(list[24].dt_txt).format("dddd")}</div>
               <div>
-                {item.list[32].main.temp.toFixed()}&deg;/
-                    {item.list[36].main.temp.toFixed()}&deg;
+                {list[24].main.temp.toFixed()}&deg;/
+                    {list[28].main.temp.toFixed()}&deg;
                   </div>
               <div>
                 <img
                   className="icon"
-                  src={`${_imgUrl}${item.list[36].weather[0].icon}@2x.png`}
+                  src={`${_imgUrl}${list[28].weather[0].icon}@2x.png`}
                   alt=""
                 />
               </div>
-              <div>{item.list[36].weather[0].description}</div>
-            </div> */}
+              <div>{list[28].weather[0].description}</div>
+            </div>
+            <div className="expand__list__item">
+              <div>{moment(list[32].dt_txt).format("dddd")}</div>
+              <div>
+                {list[32].main.temp.toFixed()}&deg;/
+                    {list[36].main.temp.toFixed()}&deg;
+                  </div>
+              <div>
+                <img
+                  className="icon"
+                  src={`${_imgUrl}${list[36].weather[0].icon}@2x.png`}
+                  alt=""
+                /> 
+              </div>
+              <div>{list[36].weather[0].description}</div>
+            </div>
           </ul>
         </div>
         {this.state.imageResp.map(i => {
