@@ -2,13 +2,13 @@
     display: flex;
     flex-direction: column;
     margin: auto;
-    width: 400px;
+    width: 25em;
 
     &__form {
         display: flex;
         margin: auto;
-        height: 40px;
-        width: 400px;
+        height: 2.5em;
+        width: 25em;
 
         &__input {
             border: none;
@@ -31,10 +31,26 @@
         }
     }
     &__list {
-        max-width: 400px;
+        max-width: 25em;
         width: 100%;
         border-radius: 5px;
-        font-size: 20px;
+        font-size: 1.3em;
+    }
+}
+
+@media (max-width: 640px) {
+    .box {
+        width: 20em;
+        &__form {
+            width: 20em;
+            &__input{
+                flex-grow: 1;
+                font-size: 1.2em;
+            }
+            &__btn {
+                font-size: 1em;
+            }
+        }
     }
 }
 

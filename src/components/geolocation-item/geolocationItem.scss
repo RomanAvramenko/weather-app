@@ -26,3 +26,14 @@
         color:rgb(0, 0, 0);
     }
 }
+
+@media (max-width: 640px) {
+    .geoLocItem {
+        font-size: 0.6em;
+        &__img {
+            > img {
+                height: 6em;
+            }
+        }
+    }
+}

@@ -78,6 +78,5 @@ export default class GeolocationItem extends React.Component {
         </div>
       </li>
     );
-
   }
 }
