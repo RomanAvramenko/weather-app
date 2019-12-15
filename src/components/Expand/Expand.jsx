@@ -64,14 +64,15 @@ export default class Expand extends React.Component {
 
   stateParser = (list) => {
     const currentDay = list[0].dt_txt.replace(/ .*$/, '');
+    const filteredDays = [];
     list.map(item => {
       const days = item.dt_txt.replace(/ .*$/, '');
-      if (currentDay === days) {
-        list.splice(0, 1);
+      if (currentDay !== days) {
+        filteredDays.push(item)
       }
-      return days;
+      return item
     });
-    return list;
+    return filteredDays;
   }
 
   render() {
@@ -80,7 +81,6 @@ export default class Expand extends React.Component {
         <Spinner />
       );
     }
-
     const { id, name, list } = this.state.expandForecast;
     const _imgUrl = "http://openweathermap.org/img/wn/";
     return (
@@ -152,16 +152,16 @@ export default class Expand extends React.Component {
               <div>{moment(list[32].dt_txt).format("dddd")}</div>
               <div>
                 {list[32].main.temp.toFixed()}&deg;/
-                    {list[36].main.temp.toFixed()}&deg;
+                    {list[list.length - 1].main.temp.toFixed()}&deg;
                   </div>
               <div>
                 <img
                   className="icon"
-                  src={`${_imgUrl}${list[36].weather[0].icon}@2x.png`}
+                  src={`${_imgUrl}${list[list.length - 1].weather[0].icon}@2x.png`}
                   alt=""
-                /> 
+                />
               </div>
-              <div>{list[36].weather[0].description}</div>
+              <div>{list[list.length - 1].weather[0].description}</div>
             </div>
           </ul>
         </div>
