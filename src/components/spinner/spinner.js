@@ -2,7 +2,7 @@ import React from "react";
 
 import './spinner.scss';
 
-const Spinner = () => {
+export const Spinner = () => {
   return (
     <div className="loadingio-spinner-spin-brk9mq9ifn">
       <div className="ldio-vlyhr5uqnrp">
@@ -43,4 +43,4 @@ const Spinner = () => {
   );
 };
 
-export default Spinner;
+

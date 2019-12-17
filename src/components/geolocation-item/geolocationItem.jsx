@@ -1,14 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./geolocationItem.scss";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
-import Spinner from "../spinner";
-//import OpenWeatherService from "../../services/open-weather-service";
-
-export default class GeolocationItem extends React.Component {
-
-  //weatherService = new OpenWeatherService();
+import { Spinner } from "../spinner/spinner";
+import "./geolocationItem.scss";
+export class GeolocationItem extends React.Component {
 
   state = {
     geolocationResp: null,

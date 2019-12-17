@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./list-item.scss";
 
-const ListItem = (props) => {
+export const ListItem = (props) => {
 
     return (
         <React.Fragment>
@@ -37,7 +37,7 @@ const ListItem = (props) => {
                                 }}
                                 className="list-item__expand">
                                 Forecast for 5 days
-                                </Link>
+                            </Link>
                         </div>
                     </li>
                 );
@@ -45,5 +45,3 @@ const ListItem = (props) => {
         </React.Fragment>
     )
 }
-
-export default ListItem

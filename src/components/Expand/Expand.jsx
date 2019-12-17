@@ -1,12 +1,12 @@
 import React from "react";
 import moment from "moment";
 import axios from "axios";
-import Spinner from "../spinner";
+import { Spinner } from "../spinner/spinner";
 import { URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US } from "../../constants"
 
 import "./expand.scss";
 
-export default class Expand extends React.Component {
+export class Expand extends React.Component {
   _isMounted = false;
   state = {
     expandForecast: null,
