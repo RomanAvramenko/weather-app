@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
-import { Spinner } from "../spinner/spinner";
 import "./geolocationItem.scss";
 export class GeolocationItem extends React.Component {
 
@@ -11,23 +10,19 @@ export class GeolocationItem extends React.Component {
   };
 
   componentDidMount() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        const lat = latitude.toFixed(5);
-        const lon = longitude.toFixed(5);
-        const location = (`lat=${lat}&lon=${lon}`);
-        const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
-        axios
-          .get(url)
-          .then(result => {
-            this.setState({ geolocationResp: this._transformData(result) })
-          })
-          .catch(e => { console.log(e.config) });
-      });
-    } else {
-      console.error("Geolocation is not require");
-    }
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+      const lat = latitude.toFixed(5);
+      const lon = longitude.toFixed(5);
+      const location = (`lat=${lat}&lon=${lon}`);
+      const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
+      axios
+        .get(url)
+        .then(result => {
+          this.setState({ geolocationResp: this._transformData(result) })
+        })
+        .catch(e => { console.log(e.config) });
+    });
   }
 
   _transformData = (result) => {
@@ -42,9 +37,7 @@ export class GeolocationItem extends React.Component {
 
   render() {
     if (this.state.geolocationResp === null) {
-      return (
-        <Spinner />
-      );
+      return null
     }
     const { id, name, temp, icon, desc } = this.state.geolocationResp;
     return (
