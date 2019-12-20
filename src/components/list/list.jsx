@@ -4,6 +4,7 @@ import { GeolocationItem } from "../geolocation-item/geolocationItem";
 import { ListItem } from '../list-item/list-item';
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import "./list.scss";
+import ErrorBoundary from "../error-boundary/error-boundary";
 
 export class List extends React.Component {
   state = {
@@ -124,9 +125,11 @@ export class List extends React.Component {
           <input className="box__form__btn" type="submit" value="Add" />
         </form>
         <ul className="box__list">
-          <GeolocationItem />
-          <ListItem response={this.state.response}
-            deleteItem={this.deleteItem} />
+          <ErrorBoundary>
+            <GeolocationItem />
+            <ListItem response={this.state.response}
+              deleteItem={this.deleteItem} />
+          </ErrorBoundary>
         </ul>
       </div>
     );
