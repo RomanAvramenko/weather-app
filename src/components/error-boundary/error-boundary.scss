@@ -1,0 +1,19 @@
+.error-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.error-image {
+    background-image: url('./images/ba5.png');
+    background-size: cover;
+    height: 10em;
+    width: 12em;
+    margin: 1em auto;
+}
+
+.error-description {
+    color: #ff5353;
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    text-align: center;
+}
