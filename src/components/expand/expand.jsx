@@ -149,9 +149,9 @@ export class Expand extends React.Component {
               <div>{list[28].weather[0].description}</div>
             </div>
             <div className="expand__list__item">
-              <div>{moment(list[32].dt_txt).format("dddd")}</div>
+              <div>{moment(list[list.length - 4].dt_txt).format("dddd")}</div>
               <div>
-                {list[32].main.temp.toFixed()}&deg;/
+                {list[list.length - 4].main.temp.toFixed()}&deg;/
                     {list[list.length - 1].main.temp.toFixed()}&deg;
                   </div>
               <div>
