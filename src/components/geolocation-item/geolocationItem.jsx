@@ -1,31 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import "./geolocationItem.scss";
-export class GeolocationItem extends React.Component {
+import { Spinner } from "../spinner/spinner";
 
-  state = {
-    geolocationResp: null,
-  };
+export const GeolocationItem = () => {
 
-  componentDidMount() {
+  const [state, setState] = useState(null)
+
+  useEffect(() => {
+
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
       const lat = latitude.toFixed(5);
       const lon = longitude.toFixed(5);
       const location = (`lat=${lat}&lon=${lon}`);
       const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
-      axios
-        .get(url)
-        .then(result => {
-          this.setState({ geolocationResp: this._transformData(result) })
+      getData(url)
+    })
+  }, [])
+
+  const getData = (url) => {
+    return axios
+      .get(url)
+      .then(result => {
+        setState({
+          data: transformData(result)
         })
-        .catch(e => { console.log(e.config) });
-    });
+      })
+      .catch(e => { console.log(e.config) });
   }
 
-  _transformData = (result) => {
+  const transformData = result => {
     return {
       id: result.data.id,
       name: result.data.name,
@@ -35,11 +42,9 @@ export class GeolocationItem extends React.Component {
     }
   }
 
-  render() {
-    if (this.state.geolocationResp === null) {
-      return null
-    }
-    const { id, name, temp, icon, desc } = this.state.geolocationResp;
+  if (state) {
+    const { id, name, temp, icon, desc } = state.data;
+
     return (
       <li key={id} className="geoLocItem">
         <div className="geoLocItem__temp">
@@ -61,11 +66,13 @@ export class GeolocationItem extends React.Component {
               state: { name: name }
             }}
             className="geoLocItem__expand"
-          >
-            Forecast for 5 days
-            </Link>
+          >Forecast for 5 days
+        </Link>
         </div>
       </li>
     );
+  } else {
+    return (<Spinner />)
   }
 }
+
