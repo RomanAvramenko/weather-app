@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
@@ -10,27 +10,27 @@ export const GeolocationItem = () => {
   const [state, setState] = useState(null)
 
   useEffect(() => {
-
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
       const lat = latitude.toFixed(5);
       const lon = longitude.toFixed(5);
       const location = (`lat=${lat}&lon=${lon}`);
       const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
-      getData(url)
+      const getData = () => {
+        return axios
+          .get(url)
+          .then(result => {
+            setState({
+              data: transformData(result)
+            })
+          })
+          .catch(e => { console.log(e.config) });
+      }
+      getData()
     })
   }, [])
 
-  const getData = (url) => {
-    return axios
-      .get(url)
-      .then(result => {
-        setState({
-          data: transformData(result)
-        })
-      })
-      .catch(e => { console.log(e.config) });
-  }
+
 
   const transformData = result => {
     return {

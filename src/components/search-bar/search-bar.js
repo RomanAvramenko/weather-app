@@ -6,14 +6,14 @@ export const SearchBar = ({ response, onAddData }) => {
   const [item, setItem] = useState('')
 
   const addItem = e => {
-    const newItem = item;
     const index = response
       .map(e => { return e.name.toLowerCase() })
-      .includes(newItem.text);
-    if (newItem.text !== "" && index === false) {
-      onAddData(newItem)
-      setItem('')
+      .includes(item);
+      console.log();
+    if (item !== "" && index === false && isNaN(parseInt(item))) {
+      onAddData(item)
     }
+    setItem('')
     e.preventDefault();
   }
 

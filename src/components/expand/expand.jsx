@@ -50,7 +50,7 @@ export class Expand extends React.Component {
         })
       )
       .catch(e => {
-        console.log(e.config);
+        console.log(e);
       });
   }
 

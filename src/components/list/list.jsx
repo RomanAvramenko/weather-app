@@ -63,13 +63,19 @@ export class List extends React.Component {
   };
 
   _transformData = (result) => {
-    return {
-      id: result.data.id,
-      name: result.data.name,
-      temp: result.data.main.temp.toFixed(),
-      icon: result.data.weather[0].icon,
-      desc: result.data.weather[0].description
+    const index = this.state.response.map(i => i.id).includes(result.data.id)
+    if (!index) {
+      return {
+        id: result.data.id,
+        name: result.data.name,
+        temp: result.data.main.temp.toFixed(),
+        icon: result.data.weather[0].icon,
+        desc: result.data.weather[0].description
+      }
+    } else {
+      return null
     }
+
   }
 
   deleteItem = id => {
