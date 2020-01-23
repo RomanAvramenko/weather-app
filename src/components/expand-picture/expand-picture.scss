@@ -1,0 +1,15 @@
+.picture {
+    height: 400px;
+    width: 400px;
+    display: flex;
+    margin: auto;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+
+@media (max-width: 640px) {
+    .picture {
+        width: 100vw;
+    }
+}

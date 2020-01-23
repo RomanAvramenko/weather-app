@@ -30,8 +30,6 @@ export const GeolocationItem = () => {
     })
   }, [])
 
-
-
   const transformData = result => {
     return {
       id: result.data.id,

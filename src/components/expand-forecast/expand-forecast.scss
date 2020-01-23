@@ -22,16 +22,6 @@
             align-content: space-between;
         }
     }
-
-    &__bg {
-        height: 400px;
-        width: 400px;
-        display: flex;
-        margin: auto;
-        border-radius: 8px;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
 }
 
 @media (max-width: 640px) {
@@ -48,15 +38,9 @@
                 width: 6em;
             }
         }
-
-        &__bg {
-            width: 100vw;
-        }
     }
 
     .icon {
         width: 7em;
     }
-
-
 }
