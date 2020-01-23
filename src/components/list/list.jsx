@@ -5,7 +5,6 @@ import { ListItem } from '../list-item/list-item';
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import "./list.scss";
 import ErrorBoundary from "../error-boundary/error-boundary";
-
 export class List extends React.Component {
   state = {
     items: [],

@@ -1,43 +1,54 @@
 .list-item {
     background-color: rgb(255, 255, 255);
     border: 1px solid rgba(0, 0, 0, 0.2);
-    border-radius: 1em;
+    border-radius: .5em;
     display: grid;
-    grid-template-rows: 2fr, 2fr, 1em;
-    grid-template-columns: auto;
     justify-items: center;
+    grid-template-columns: 1em, 1fr, 1fr, 2em;
+    grid-template-rows: 2em, auto, 2em;
     grid-template-areas:
-        "temp img button"
-        "city . link"
+        "temp . img button"
+        "temp . img ."
+        "city city expand expand"
     ;
 
     &__name {
         grid-area: city;
-        justify-self: center;
+        justify-self: self-start;
+        padding-left: .5em;
     }
 
     &__temp {
         grid-area: temp;
-        font-size: 3em;
+        justify-self: self-end;
+        font-size: 2em;
         color: rgb(0, 0, 0)
     }
 
     &__img {
         grid-area: img;
+        justify-self: self-end;
+        height: 4em;
+        width: 4em;
+        background-size: cover;
     }
 
     &__btn {
         grid-area: button;
-        margin-top: 1em;
         height: 1em;
         font-size: 1em;
+        justify-self: self-end;
+        padding-right: 0.5em;
+        padding-top: 0.5em;
         border: none;
         background-color: inherit;
         cursor: pointer;
     }
 
     &__expand {
-        grid-area: link;
+        grid-area: expand;
+        justify-self: self-end;
+        padding-right: 0.5em;
         text-decoration: none;
         color: rgb(0, 0, 0);
     }
@@ -46,8 +57,9 @@
 @media (max-width: 640px) {
     .list-item {
         font-size: 0.6em;
+
         &__img {
-            > img {
+            >img {
                 height: 5em;
             }
         }

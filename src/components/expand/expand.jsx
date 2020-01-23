@@ -43,7 +43,7 @@ export class Expand extends React.Component {
       .then(
         axios.spread((result, imgResp) => {
           this.setState({
-            expandForecast: this._transformData(result),
+            expandForecast: this.transformData(result),
             imageResp: [...this.state.imageResp, imgResp.data],
           });
           this.stateParser()
@@ -54,7 +54,7 @@ export class Expand extends React.Component {
       });
   }
 
-  _transformData = (result) => {
+  transformData = (result) => {
     return {
       id: result.data.city.id,
       name: result.data.city.name,

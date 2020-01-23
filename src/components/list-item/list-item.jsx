@@ -7,16 +7,18 @@ export const ListItem = (props) => {
   return (
     <React.Fragment>
       {props.response.map(item => {
+        const image = {
+          backgroundImage:
+            `url(http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png)`
+        }
+        console.log(image);
         return (
           <li className="list-item" key={item.id}>
             <div className="list-item__temp">
               <span>{item.main.temp.toFixed()}&deg;</span>
             </div>
-            <div className="list-item__img">
-              <img
-                src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
-                alt=""
-              />
+            <div className="list-item__img"
+              style={image}>
             </div>
             <button
               className="list-item__btn"
@@ -24,20 +26,18 @@ export const ListItem = (props) => {
                 props.deleteItem(item.id);
               }}>
               &#10006;
-                            </button>
+            </button>
             <div className="list-item__name">
               <span>{item.name}</span>
             </div>
-            <div>
-              <Link
-                to={{
-                  pathname: "/expand",
-                  state: { name: item.name }
-                }}
-                className="list-item__expand">
-                Forecast for 5 days
+            <Link
+              to={{
+                pathname: "/expand",
+                state: { name: item.name }
+              }}
+              className="list-item__expand">
+              Forecast for 5 days
               </Link>
-            </div>
           </li>
         );
       })}
