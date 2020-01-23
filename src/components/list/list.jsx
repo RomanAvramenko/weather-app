@@ -5,10 +5,10 @@ import { ListItem } from '../list-item/list-item';
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import "./list.scss";
 import ErrorBoundary from "../error-boundary/error-boundary";
+import { SearchBar } from "../search-bar/search-bar";
 export class List extends React.Component {
   state = {
     items: [],
-    currentItem: "",
     response: [],
   };
 
@@ -21,7 +21,7 @@ export class List extends React.Component {
   componentDidUpdate(prevProps, prevState) {
     const { items } = this.state;
     if (prevState.items !== items) {
-      const url = `${URL_WEATHER}q=${items[items.length - 1].text}&units=metric${API_KEY_OW}`;
+      const url = `${URL_WEATHER}q=${items}&units=metric${API_KEY_OW}`;
       axios
         .get(url)
         .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
@@ -72,61 +72,31 @@ export class List extends React.Component {
     }
   }
 
-  updateInput = e => {
-    const itemText = e.target.value.toLowerCase();
-    const currentItem = {
-      text: itemText
-    };
-    this.setState({
-      currentItem
-    });
-  };
-
-  addItem = e => {
-    const newItem = this.state.currentItem;
-    const index = this.state.response
-      .map(e => { return e.name.toLowerCase() })
-      .includes(newItem.text);
-    if (newItem.text !== "" && index === false) {
-      const items = [...this.state.items];
-      items.push(newItem);
-      this.setState(
-        {
-          items: items,
-          currentItem: { text: "" }
-        }
-      );
-    }
-    e.target.reset();
-    e.preventDefault();
-  };
-
   deleteItem = id => {
     this.setState({
       response: this.state.response.filter(el => el.id !== id)
     });
     localStorage.removeItem(id);
-  };
+  }
+
+  addItem = (item) => {
+    this.setState({
+      items: item
+    })
+  }
 
   render() {
     return (
       <div className="box">
-        <form className="box__form" onSubmit={this.addItem}>
-          <label>
-            <input
-              type="text"
-              className="box__form__input"
-              placeholder="City Name"
-              value={this.currentItem}
-              onChange={this.updateInput}
-            />
-          </label>
-          <input className="box__form__btn" type="submit" value="Add" />
-        </form>
+        <SearchBar
+          response={this.state.response}
+          onAddData={this.addItem}
+        />
         <ul className="box__list">
           <ErrorBoundary>
             <GeolocationItem />
-            <ListItem response={this.state.response}
+            <ListItem
+              response={this.state.response}
               deleteItem={this.deleteItem} />
           </ErrorBoundary>
         </ul>

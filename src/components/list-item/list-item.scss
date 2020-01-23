@@ -4,8 +4,6 @@
     border-radius: .5em;
     display: grid;
     justify-items: center;
-    grid-template-columns: 1em, 1fr, 1fr, 2em;
-    grid-template-rows: 2em, auto, 2em;
     grid-template-areas:
         "temp . img button"
         "temp . img ."
@@ -59,9 +57,7 @@
         font-size: 0.6em;
 
         &__img {
-            >img {
-                height: 5em;
-            }
+            height: 3em;
         }
     }
 }

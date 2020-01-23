@@ -5,17 +5,16 @@ import "./list-item.scss";
 
 export const ListItem = (props) => {
   return (
-    <React.Fragment>
+    <>
       {props.response.map(item => {
         const image = {
           backgroundImage:
             `url(http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png)`
         }
-        console.log(image);
         return (
           <li className="list-item" key={item.id}>
             <div className="list-item__temp">
-              <span>{item.main.temp.toFixed()}&deg;</span>
+              {item.main.temp.toFixed()}&deg;
             </div>
             <div className="list-item__img"
               style={image}>
@@ -41,6 +40,6 @@ export const ListItem = (props) => {
           </li>
         );
       })}
-    </React.Fragment>
+    </>
   )
 }
