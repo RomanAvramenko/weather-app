@@ -13,9 +13,10 @@ export const Expand = ({ location }) => {
 
   const [state, setState] = useState(initialState)
 
+
+
   useEffect(() => {
-    let isMounted = true;
-    const getData = () => {
+    const getData = async () => {
       const state = location.state
       if (state) {
         window.addEventListener(
@@ -27,7 +28,7 @@ export const Expand = ({ location }) => {
       const stateCheck = loadData ? state.name : window.sessionStorage.getItem("key");
       const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
       const urlImage = `${URL_IMAGE + API_KEY_US}&page=1&query=${stateCheck} city buildings`;
-      axios
+      await axios
         .all([
           axios.get(urlWeather),
           axios.get(urlImage)
@@ -44,17 +45,18 @@ export const Expand = ({ location }) => {
           console.log(e);
         });
     }
-    getData()
-    return () => isMounted = false
-  }, [])
-
-  const transformData = (result) => {
-    return {
-      id: result.data.city.id,
-      name: result.data.city.name,
-      list: stateParser(result.data.list)
+    const transformData = (result) => {
+      return {
+        id: result.data.city.id,
+        name: result.data.city.name,
+        list: stateParser(result.data.list)
+      }
     }
-  }
+    getData()
+    return () => location
+  }, [location])
+
+
 
   const stateParser = (list) => {
     const currentDay = list[0].dt_txt.replace(/ .*$/, '');
