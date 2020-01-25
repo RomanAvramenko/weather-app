@@ -24,9 +24,20 @@ export class List extends React.Component {
       const url = `${URL_WEATHER}q=${items}&units=metric${API_KEY_OW}`;
       axios
         .get(url)
-        .then(response => { this.setState({ response: [...this.state.response, response.data] }) })
+        .then(response => {
+          return (
+            !!this.checkRepeat(response) === false
+              ? this.setState({ response: [...this.state.response, this.transformData(response)] })
+              : null
+          )
+        })
         .catch(e => { console.error(e.config) });
     }
+  }
+
+  checkRepeat = (res) => {
+    const current = res.data.id
+    this.state.response.map(i => i.id).includes(current)
   }
 
   componentWillUnmount() {
@@ -57,25 +68,19 @@ export class List extends React.Component {
       const url = `${URL_WEATHER}q=${item.text}&units=metric${API_KEY_OW}`
       axios
         .get(url)
-        .then(result => { this.setState({ response: this._transformData(result) }) })
+        .then(result => { this.setState({ response: this.transformData(result) }) })
         .catch(e => { console.log(e.config); });
     });
   };
 
-  _transformData = (result) => {
-    const index = this.state.response.map(i => i.id).includes(result.data.id)
-    if (!index) {
-      return {
-        id: result.data.id,
-        name: result.data.name,
-        temp: result.data.main.temp.toFixed(),
-        icon: result.data.weather[0].icon,
-        desc: result.data.weather[0].description
-      }
-    } else {
-      return null
+  transformData = (result) => {
+    return {
+      id: result.data.id,
+      name: result.data.name,
+      temp: result.data.main.temp.toFixed(),
+      icon: result.data.weather[0].icon,
+      desc: result.data.weather[0].description
     }
-
   }
 
   deleteItem = id => {

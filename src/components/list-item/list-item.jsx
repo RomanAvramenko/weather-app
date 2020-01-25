@@ -3,18 +3,19 @@ import { Link } from "react-router-dom";
 
 import "./list-item.scss";
 
-export const ListItem = (props) => {
+export const ListItem = ({response, deleteItem}) => {
+  console.log(response);
   return (
     <>
-      {props.response.map(item => {
+      {response.map(item => {
         const image = {
           backgroundImage:
-            `url(http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png)`
+            `url(http://openweathermap.org/img/wn/${item.icon}@2x.png)`
         }
         return (
           <li className="list-item" key={item.id}>
             <div className="list-item__temp">
-              {item.main.temp.toFixed()}&deg;
+              {item.temp}&deg;
             </div>
             <div className="list-item__img"
               style={image}>
@@ -22,7 +23,7 @@ export const ListItem = (props) => {
             <button
               className="list-item__btn"
               onClick={() => {
-                props.deleteItem(item.id);
+                deleteItem(item.id);
               }}>
               &#10006;
             </button>

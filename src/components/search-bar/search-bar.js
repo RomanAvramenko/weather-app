@@ -9,7 +9,6 @@ export const SearchBar = ({ response, onAddData }) => {
     const index = response
       .map(e => { return e.name.toLowerCase() })
       .includes(item);
-      console.log();
     if (item !== "" && index === false && isNaN(parseInt(item))) {
       onAddData(item)
     }
