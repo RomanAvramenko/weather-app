@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import "./list-item.scss";
 
 export const ListItem = ({response, deleteItem}) => {
-  console.log(response);
   return (
     <>
       {response.map(item => {

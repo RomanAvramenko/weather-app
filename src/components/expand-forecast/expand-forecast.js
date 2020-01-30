@@ -14,66 +14,66 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>{moment(list[0].dt_txt).format("dddd")}</div>
           <div>
             {list[0].main.temp.toFixed()}&deg;/
-                    {list[4].main.temp.toFixed()}&deg;
+                    {list[1].main.temp.toFixed()}&deg;
                   </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[4].weather[0].icon}@2x.png`}
+              src={`${_imgUrl}${list[1].weather[0].icon}@2x.png`}
               alt=""
             />
           </div>
-          <div>{list[4].weather[0].description}</div>
+          <div>{list[1].weather[0].description}</div>
         </div>
         <div className="expand__list__item">
-          <div>{moment(list[8].dt_txt).format("dddd")}</div>
+          <div>{moment(list[2].dt_txt).format("dddd")}</div>
           <div>
-            {list[8].main.temp.toFixed()}&deg;/
-                    {list[12].main.temp.toFixed()}&deg;
+            {list[2].main.temp.toFixed()}&deg;/
+                    {list[3].main.temp.toFixed()}&deg;
                   </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[12].weather[0].icon}@2x.png`}
+              src={`${_imgUrl}${list[3].weather[0].icon}@2x.png`}
               alt=""
             />
           </div>
-          <div>{list[12].weather[0].description}</div>
+          <div>{list[3].weather[0].description}</div>
         </div>
         <div className="expand__list__item">
-          <div>{moment(list[16].dt_txt).format("dddd")}</div>
+          <div>{moment(list[4].dt_txt).format("dddd")}</div>
           <div>
-            {list[16].main.temp.toFixed()}&deg;/
-                    {list[20].main.temp.toFixed()}&deg;
+            {list[4].main.temp.toFixed()}&deg;/
+                    {list[5].main.temp.toFixed()}&deg;
                   </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[20].weather[0].icon}@2x.png`}
+              src={`${_imgUrl}${list[5].weather[0].icon}@2x.png`}
               alt=""
             />
           </div>
-          <div>{list[20].weather[0].description}</div>
+          <div>{list[5].weather[0].description}</div>
         </div>
         <div className="expand__list__item">
-          <div>{moment(list[24].dt_txt).format("dddd")}</div>
+          <div>{moment(list[6].dt_txt).format("dddd")}</div>
           <div>
-            {list[24].main.temp.toFixed()}&deg;/
-                    {list[28].main.temp.toFixed()}&deg;
+            {list[6].main.temp.toFixed()}&deg;/
+                    {list[7].main.temp.toFixed()}&deg;
                   </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[28].weather[0].icon}@2x.png`}
+              src={`${_imgUrl}${list[7].weather[0].icon}@2x.png`}
               alt=""
             />
           </div>
-          <div>{list[28].weather[0].description}</div>
+          <div>{list[7].weather[0].description}</div>
         </div>
         <div className="expand__list__item">
-          <div>{moment(list[list.length - 4].dt_txt).format("dddd")}</div>
+          <div>{moment(list[list.length - 2].dt_txt).format("dddd")}</div>
           <div>
-            {list[list.length - 4].main.temp.toFixed()}&deg;/
+            {list[list.length - 2].main.temp.toFixed()}&deg;/
                     {list[list.length - 1].main.temp.toFixed()}&deg;
                   </div>
           <div>

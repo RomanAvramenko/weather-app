@@ -68,7 +68,8 @@ export const Expand = ({ location }) => {
       }
       return item
     });
-    return filteredDays;
+    ;
+    return filteredDays.filter((i, index) => index % 4 === 0);
   }
 
   const renderChild = () => {
