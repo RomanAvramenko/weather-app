@@ -1,11 +1,12 @@
-import React from "react";
-import axios from "axios";
-import { GeolocationItem } from "../geolocation-item/geolocationItem";
-import { ListItem } from '../list-item/list-item';
-import { URL_WEATHER, API_KEY_OW } from "../../constants";
+import React from "react"
+import axios from "axios"
+import { URL_WEATHER, API_KEY_OW } from "../../constants"
+import { GeolocationItem } from "../geolocation-item/geolocationItem"
+import { ListItem } from '../list-item/list-item'
+import ErrorBoundary from "../error-boundary/error-boundary"
+import { SearchBar } from "../search-bar/search-bar"
 import "./list.scss";
-import ErrorBoundary from "../error-boundary/error-boundary";
-import { SearchBar } from "../search-bar/search-bar";
+
 export class List extends React.Component {
   state = {
     items: [],

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import { Link } from "react-router-dom";
 
 import "./list-item.scss";
@@ -42,4 +43,9 @@ export const ListItem = ({response, deleteItem}) => {
       })}
     </>
   )
+}
+
+ListItem.propTypes = {
+  response: PropTypes.arrayOf(PropTypes.object),
+  deleteItem: PropTypes.func
 }

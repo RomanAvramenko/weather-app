@@ -1,11 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import moment from "moment";
 import './expand-forecast.scss'
 
 export const ExpandForecast = ({ expandForecast }) => {
   const { id, name, list } = expandForecast;
   const _imgUrl = "http://openweathermap.org/img/wn/";
-
   return (
     <div className="expand" key={id}>
       <h1 className="expand__name">{name.toUpperCase()}</h1>
@@ -74,8 +74,8 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>{moment(list[list.length - 2].dt_txt).format("dddd")}</div>
           <div>
             {list[list.length - 2].main.temp.toFixed()}&deg;/
-                    {list[list.length - 1].main.temp.toFixed()}&deg;
-                  </div>
+            {list[list.length - 1].main.temp.toFixed()}&deg;
+          </div>
           <div>
             <img
               className="icon"
@@ -88,5 +88,9 @@ export const ExpandForecast = ({ expandForecast }) => {
       </ul>
     </div>
   );
+}
+
+ExpandForecast.propTypes = {
+  expandForecast: PropTypes.object
 }
 

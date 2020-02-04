@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import './search-bar.scss'
 
 export const SearchBar = ({ response, onAddData }) => {
-
   const [item, setItem] = useState('')
 
   const addItem = e => {
@@ -32,4 +32,9 @@ export const SearchBar = ({ response, onAddData }) => {
       </form>
     </>
   )
+}
+
+SearchBar.propTypes = {
+  response: PropTypes.arrayOf(PropTypes.object),
+  onAddData: PropTypes.func
 }

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Spinner } from "../spinner/spinner";
+import React, { useState, useEffect } from "react"
+import PropTypes from 'prop-types'
+import axios from "axios"
+import { Spinner } from "../spinner/spinner"
 import { URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US } from "../../constants"
-import { ExpandForecast } from "../expand-forecast/expand-forecast";
-import { ExpandPicture } from "../expand-picture/expand-picture";
+import { ExpandForecast } from "../expand-forecast/expand-forecast"
+import { ExpandPicture } from "../expand-picture/expand-picture"
 
 export const Expand = ({ location }) => {
   const initialState = {
@@ -12,8 +13,6 @@ export const Expand = ({ location }) => {
   };
 
   const [state, setState] = useState(initialState)
-
-
 
   useEffect(() => {
     const getData = async () => {
@@ -37,7 +36,7 @@ export const Expand = ({ location }) => {
           axios.spread((result, imgResp) => {
             setState({
               expandForecast: transformData(result),
-              imageResp: imgResp.data
+              imageResp: imgResp.data.results
             });
           })
         )
@@ -67,8 +66,7 @@ export const Expand = ({ location }) => {
         filteredDays.push(item)
       }
       return item
-    });
-    ;
+    })
     return filteredDays.filter((i, index) => index % 4 === 0);
   }
 
@@ -85,4 +83,8 @@ export const Expand = ({ location }) => {
     state.expandForecast !== null
       ? renderChild()
       : <Spinner />)
+}
+
+Expand.propTypes={
+  location: PropTypes.object
 }
