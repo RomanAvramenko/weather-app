@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import "./list-item.scss";
 
-export const ListItem = ({response, deleteItem}) => {
+export const ListItem = ({ response, deleteItem }) => {
   return (
     <>
       {response.map(item => {
@@ -23,7 +23,7 @@ export const ListItem = ({response, deleteItem}) => {
             <button
               className="list-item__btn"
               onClick={() => {
-                deleteItem(item.id);
+                deleteItem(item.id, item.index);
               }}>
               &#10006;
             </button>
