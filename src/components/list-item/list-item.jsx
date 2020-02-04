@@ -10,7 +10,7 @@ export const ListItem = ({ response, deleteItem }) => {
       {response.map(item => {
         const image = {
           backgroundImage:
-            `url(http://openweathermap.org/img/wn/${item.icon}@2x.png)`
+            `url(https://openweathermap.org/img/wn/${item.icon}@2x.png)`
         }
         return (
           <li className="list-item" key={item.id}>
@@ -23,7 +23,7 @@ export const ListItem = ({ response, deleteItem }) => {
             <button
               className="list-item__btn"
               onClick={() => {
-                deleteItem(item.id, item.index);
+                deleteItem(item.id);
               }}>
               &#10006;
             </button>

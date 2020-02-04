@@ -5,7 +5,7 @@ import './expand-forecast.scss'
 
 export const ExpandForecast = ({ expandForecast }) => {
   const { id, name, list } = expandForecast;
-  const _imgUrl = "http://openweathermap.org/img/wn/";
+  const _imgUrl = "https://openweathermap.org/img/wn/";
   return (
     <div className="expand" key={id}>
       <h1 className="expand__name">{name.toUpperCase()}</h1>
