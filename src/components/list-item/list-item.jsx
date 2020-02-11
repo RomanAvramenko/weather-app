@@ -25,7 +25,7 @@ export const ListItem = ({ response, deleteItem }) => {
               onClick={() => {
                 deleteItem(item.id);
               }}>
-              <i class="fas fa-times"></i>
+              <i className="fas fa-times"></i>
             </button>
             <div className="list-item__name">
               <span>{item.name}</span>
@@ -37,7 +37,7 @@ export const ListItem = ({ response, deleteItem }) => {
               }}
               className="list-item__expand">
               more &nbsp;
-              <i class="fas fa-angle-double-right"></i>
+              <i className="fas fa-angle-double-right"></i>
             </Link>
           </li>
         );

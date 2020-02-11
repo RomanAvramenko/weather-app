@@ -4,22 +4,24 @@ import moment from "moment";
 import './expand-forecast.scss'
 
 export const ExpandForecast = ({ expandForecast }) => {
+  console.log(expandForecast.list.slice(0,2), expandForecast.list);
   const { id, name, list } = expandForecast;
   const _imgUrl = "https://openweathermap.org/img/wn/";
-  return (
+  const weatherIcon = (index) => `${_imgUrl}${list[index].weather[0].icon}@2x.png`
+    return (
     <div className="expand" key={id}>
       <h1 className="expand__name">{name.toUpperCase()}</h1>
       <ul className="expand__list">
         <div className="expand__list__item">
-          <div>{moment(list[0].dt_txt).format("dddd")}</div>
+          {moment(list[0].dt_txt).format("dddd")}
           <div>
             {list[0].main.temp.toFixed()}&deg;/
-                    {list[1].main.temp.toFixed()}&deg;
-                  </div>
+            {list[1].main.temp.toFixed()}&deg;
+          </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[1].weather[0].icon}@2x.png`}
+              src={weatherIcon(1)}
               alt=""
             />
           </div>
@@ -29,12 +31,12 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>{moment(list[2].dt_txt).format("dddd")}</div>
           <div>
             {list[2].main.temp.toFixed()}&deg;/
-                    {list[3].main.temp.toFixed()}&deg;
-                  </div>
+            {list[3].main.temp.toFixed()}&deg;
+          </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[3].weather[0].icon}@2x.png`}
+              src={weatherIcon(3)}
               alt=""
             />
           </div>
@@ -49,7 +51,7 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[5].weather[0].icon}@2x.png`}
+              src={weatherIcon(5)}
               alt=""
             />
           </div>
@@ -59,12 +61,12 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>{moment(list[6].dt_txt).format("dddd")}</div>
           <div>
             {list[6].main.temp.toFixed()}&deg;/
-                    {list[7].main.temp.toFixed()}&deg;
-                  </div>
+            {list[7].main.temp.toFixed()}&deg;
+          </div>
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[7].weather[0].icon}@2x.png`}
+              src={weatherIcon(7)}
               alt=""
             />
           </div>
@@ -79,7 +81,7 @@ export const ExpandForecast = ({ expandForecast }) => {
           <div>
             <img
               className="icon"
-              src={`${_imgUrl}${list[list.length - 1].weather[0].icon}@2x.png`}
+              src={weatherIcon(list.length - 1)}
               alt=""
             />
           </div>
@@ -88,9 +90,9 @@ export const ExpandForecast = ({ expandForecast }) => {
       </ul>
     </div>
   );
-}
+  }
 
-ExpandForecast.propTypes = {
-  expandForecast: PropTypes.object
-}
+  ExpandForecast.propTypes = {
+    expandForecast: PropTypes.object
+  }
 

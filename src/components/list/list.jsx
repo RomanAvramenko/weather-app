@@ -3,7 +3,7 @@ import axios from "axios"
 import { URL_WEATHER, API_KEY_OW } from "../../constants"
 import { GeolocationItem } from "../geolocation-item/geolocationItem"
 import { ListItem } from '../list-item/list-item'
-import ErrorBoundary from "../error-boundary/error-boundary"
+import { ErrorBoundary } from "../error-boundary/error-boundary"
 import { SearchBar } from "../search-bar/search-bar"
 import "./list.scss";
 
@@ -41,8 +41,12 @@ export const List = () => {
       axios
         .get(url)
         .then(resp => {
-          setResponse([...response, transformData(resp)])
-          setItems([])
+          if (!response.some(i => i.name === resp.data.name)) {
+            setResponse([...response, transformData(resp)])
+            setItems([])
+          } else {
+            setItems([])
+          }
         })
         .catch(e => { console.error(e.config) });
     }

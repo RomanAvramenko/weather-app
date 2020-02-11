@@ -66,7 +66,7 @@ export const GeolocationItem = () => {
             className="geoLocItem__expand"
           >
             more &nbsp;
-              <i class="fas fa-angle-double-right"></i>
+              <i className="fas fa-angle-double-right"></i>
           </Link>
         </div>
       </li>

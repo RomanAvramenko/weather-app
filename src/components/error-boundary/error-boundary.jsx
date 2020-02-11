@@ -1,7 +1,7 @@
 import React from 'react'
 import './error-boundary.scss'
 
-export default class ErrorBoundary extends React.Component {
+export class ErrorBoundary extends React.Component {
 	state = {
 		hasError: false
 	}
