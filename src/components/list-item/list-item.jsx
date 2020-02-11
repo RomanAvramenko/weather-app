@@ -25,7 +25,7 @@ export const ListItem = ({ response, deleteItem }) => {
               onClick={() => {
                 deleteItem(item.id);
               }}>
-              &#10006;
+              <i class="fas fa-times"></i>
             </button>
             <div className="list-item__name">
               <span>{item.name}</span>
@@ -36,8 +36,9 @@ export const ListItem = ({ response, deleteItem }) => {
                 state: { name: item.name }
               }}
               className="list-item__expand">
-              Forecast for 5 days
-              </Link>
+              more &nbsp;
+              <i class="fas fa-angle-double-right"></i>
+            </Link>
           </li>
         );
       })}

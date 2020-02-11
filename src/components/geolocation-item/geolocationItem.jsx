@@ -64,8 +64,10 @@ export const GeolocationItem = () => {
               state: { name: name }
             }}
             className="geoLocItem__expand"
-          >Forecast for 5 days
-        </Link>
+          >
+            more &nbsp;
+              <i class="fas fa-angle-double-right"></i>
+          </Link>
         </div>
       </li>
     );
