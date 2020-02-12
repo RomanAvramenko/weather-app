@@ -4,7 +4,6 @@ import moment from "moment";
 import './expand-forecast.scss'
 
 export const ExpandForecast = ({ expandForecast }) => {
-  console.log(expandForecast.list.slice(0,2), expandForecast.list);
   const { id, name, list } = expandForecast;
   const _imgUrl = "https://openweathermap.org/img/wn/";
   const weatherIcon = (index) => `${_imgUrl}${list[index].weather[0].icon}@2x.png`

@@ -1,48 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux'
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
-import "./geolocationItem.scss";
+
 import { Spinner } from "../spinner/spinner";
+
+import "./geolocationItem.scss";
+import { geolocationReceive } from "../../store/actions/geolocation";
 
 export const GeolocationItem = () => {
 
-  const [state, setState] = useState(null)
+  const { geoWeather } = useSelector(state => state)
+  const dispatch = useDispatch()
 
-  useEffect(() => {
+
+
+  const getData = () => {
     navigator.geolocation.getCurrentPosition(position => {
       const { latitude, longitude } = position.coords;
       const lat = latitude.toFixed(5);
       const lon = longitude.toFixed(5);
       const location = (`lat=${lat}&lon=${lon}`);
       const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
-      const getData = () => {
-        return axios
-          .get(url)
-          .then(result => {
-            setState({
-              data: transformData(result)
-            })
-          })
-          .catch(e => { console.log(e.config) });
-      }
-      getData()
+      return axios
+        .get(url)
+        .then(result => dispatch(geolocationReceive(result)))
+        .catch(e => { console.log(e.config) })
     })
-  }, [])
-
-  const transformData = result => {
-    return {
-      id: result.data.id,
-      name: result.data.name,
-      temp: result.data.main.temp.toFixed(),
-      icon: result.data.weather[0].icon,
-      desc: result.data.weather[0].description
-    }
   }
 
-  if (state) {
-    const { id, name, temp, icon, desc } = state.data;
+  useEffect(() => {
+    getData()
+    // eslint-disable-next-line
+  }, [])
 
+  if (geoWeather) {
+    const { id, name, temp, icon, desc } = geoWeather;
     return (
       <li key={id} className="geoLocItem">
         <div className="geoLocItem__temp">

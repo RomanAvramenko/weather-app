@@ -3,7 +3,6 @@ import axios from "axios"
 import { URL_WEATHER, API_KEY_OW } from "../../constants"
 import { GeolocationItem } from "../geolocation-item/geolocationItem"
 import { ListItem } from '../list-item/list-item'
-import { ErrorBoundary } from "../error-boundary/error-boundary"
 import { SearchBar } from "../search-bar/search-bar"
 import "./list.scss";
 
@@ -52,6 +51,7 @@ export const List = () => {
     }
     return () => {
     }
+    // eslint-disable-next-line
   }, [items])
 
   const transformData = (result) => {
@@ -81,12 +81,10 @@ export const List = () => {
         onAddData={addItem}
       />
       <ul className="box__list">
-        <ErrorBoundary>
-          <GeolocationItem />
-          <ListItem
-            response={response}
-            deleteItem={deleteItem} />
-        </ErrorBoundary>
+        <GeolocationItem />
+        <ListItem
+          response={response}
+          deleteItem={deleteItem} />
       </ul>
     </div>
   );
