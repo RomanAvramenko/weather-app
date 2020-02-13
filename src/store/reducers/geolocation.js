@@ -13,3 +13,4 @@ export const geolocationReducer = (state = initialState, action) => {
     default: return state
   }
 }
+

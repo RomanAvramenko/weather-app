@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
+import { useSelector, useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import axios from "axios"
 import { Spinner } from "../spinner/spinner"
 import { URL_FORECAST, API_KEY_OW, URL_IMAGE, API_KEY_US } from "../../constants"
 import { ExpandForecast } from "../expand-forecast/expand-forecast"
 import { ExpandPicture } from "../expand-picture/expand-picture"
+import { expandForecastReceive } from '../../store/actions/expand'
 
 export const Expand = ({ location }) => {
-  const initialState = {
-    expandForecast: null,
-    imageResp: [],
-  };
 
-  const [state, setState] = useState(initialState)
+  const dispatch = useDispatch()
+  const { expandForecast } = useSelector(state => state.expand)
 
   useEffect(() => {
     const getData = async () => {
@@ -34,57 +33,32 @@ export const Expand = ({ location }) => {
         ])
         .then(
           axios.spread((result, imgResp) => {
-            setState({
-              expandForecast: transformData(result),
-              imageResp: imgResp.data.results
-            });
+            return dispatch(expandForecastReceive(result, imgResp))
           })
         )
         .catch(e => {
           console.log(e);
         });
     }
-    const transformData = (result) => {
-      return {
-        id: result.data.city.id,
-        name: result.data.city.name,
-        list: stateParser(result.data.list)
-      }
-    }
     getData()
     return () => location
   }, [location])
 
-
-
-  const stateParser = (list) => {
-    const currentDay = list[0].dt_txt.replace(/ .*$/, '');
-    const filteredDays = [];
-    list.map(item => {
-      const days = item.dt_txt.replace(/ .*$/, '');
-      if (currentDay !== days) {
-        filteredDays.push(item)
-      }
-      return item
-    })
-    return filteredDays.filter((i, index) => index % 4 === 0);
-  }
-
   const renderChild = () => {
     return (
       <>
-        <ExpandForecast expandForecast={state.expandForecast} />
-        <ExpandPicture imageResp={state.imageResp} />
+        <ExpandForecast/>
+        <ExpandPicture/>
       </>
     )
   }
 
   return (
-    state.expandForecast !== null
+    expandForecast !== null
       ? renderChild()
       : <Spinner />)
 }
 
-Expand.propTypes={
+Expand.propTypes = {
   location: PropTypes.object
 }

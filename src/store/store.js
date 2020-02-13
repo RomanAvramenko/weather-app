@@ -1,4 +1,4 @@
 import { createStore } from 'redux'
-import { geolocationReducer } from './reducers/geolocation'
+import reducer from './reducers/index'
 
-export const store = createStore(geolocationReducer)
+export const store = createStore(reducer)

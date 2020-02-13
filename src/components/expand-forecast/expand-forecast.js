@@ -1,13 +1,15 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import moment from "moment";
 import './expand-forecast.scss'
 
-export const ExpandForecast = ({ expandForecast }) => {
+export const ExpandForecast = () => {
+  const { expandForecast } = useSelector(state => state.expand)
   const { id, name, list } = expandForecast;
   const _imgUrl = "https://openweathermap.org/img/wn/";
   const weatherIcon = (index) => `${_imgUrl}${list[index].weather[0].icon}@2x.png`
-    return (
+  return (
     <div className="expand" key={id}>
       <h1 className="expand__name">{name.toUpperCase()}</h1>
       <ul className="expand__list">
@@ -89,9 +91,9 @@ export const ExpandForecast = ({ expandForecast }) => {
       </ul>
     </div>
   );
-  }
+}
 
-  ExpandForecast.propTypes = {
-    expandForecast: PropTypes.object
-  }
+ExpandForecast.propTypes = {
+  expandForecast: PropTypes.object
+}
 

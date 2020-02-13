@@ -3,18 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux'
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
-
 import { Spinner } from "../spinner/spinner";
-
 import "./geolocationItem.scss";
 import { geolocationReceive } from "../../store/actions/geolocation";
 
 export const GeolocationItem = () => {
 
-  const { geoWeather } = useSelector(state => state)
+  const geoWeather = useSelector(state => state.geoloc.geoWeather)
   const dispatch = useDispatch()
-
-
 
   const getData = () => {
     navigator.geolocation.getCurrentPosition(position => {
