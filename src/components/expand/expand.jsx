@@ -11,7 +11,7 @@ import { expandForecastReceive } from '../../store/actions/expand'
 export const Expand = ({ location }) => {
 
   const dispatch = useDispatch()
-  const { expandForecast } = useSelector(state => state.expand)
+  const { expandForecast, imageResp } = useSelector(state => state.expand)
 
   useEffect(() => {
     const getData = async () => {
@@ -32,31 +32,29 @@ export const Expand = ({ location }) => {
           axios.get(urlImage)
         ])
         .then(
-          axios.spread((result, imgResp) => {
-            return dispatch(expandForecastReceive(result, imgResp))
-          })
+          axios.spread((result, imgResp) => dispatch(expandForecastReceive(result, imgResp)))
         )
-        .catch(e => {
-          console.log(e);
-        });
+        .catch(e => console.log(e));
     }
     getData()
     return () => location
+    // eslint-disable-next-line
   }, [location])
 
   const renderChild = () => {
     return (
       <>
-        <ExpandForecast/>
-        <ExpandPicture/>
+        <ExpandForecast />
+        <ExpandPicture />
       </>
     )
   }
 
   return (
-    expandForecast !== null
-      ? renderChild()
-      : <Spinner />)
+    !expandForecast || !imageResp
+      ? <Spinner />
+      : renderChild()
+  )
 }
 
 Expand.propTypes = {

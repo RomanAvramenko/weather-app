@@ -5,8 +5,7 @@ import moment from "moment";
 import './expand-forecast.scss'
 
 export const ExpandForecast = () => {
-  const { expandForecast } = useSelector(state => state.expand)
-  const { id, name, list } = expandForecast;
+  const { id, name, list } = useSelector(state => state.expand.expandForecast)
   const _imgUrl = "https://openweathermap.org/img/wn/";
   const weatherIcon = (index) => `${_imgUrl}${list[index].weather[0].icon}@2x.png`
   return (
@@ -74,19 +73,19 @@ export const ExpandForecast = () => {
           <div>{list[7].weather[0].description}</div>
         </div>
         <div className="expand__list__item">
-          <div>{moment(list[list.length - 2].dt_txt).format("dddd")}</div>
+          <div>{moment(list[8].dt_txt).format("dddd")}</div>
           <div>
-            {list[list.length - 2].main.temp.toFixed()}&deg;/
-            {list[list.length - 1].main.temp.toFixed()}&deg;
+            {list[8].main.temp.toFixed()}&deg;/
+            {list[9].main.temp.toFixed()}&deg;
           </div>
           <div>
             <img
               className="icon"
-              src={weatherIcon(list.length - 1)}
+              src={weatherIcon(9)}
               alt=""
             />
           </div>
-          <div>{list[list.length - 1].weather[0].description}</div>
+          <div>{list[9].weather[0].description}</div>
         </div>
       </ul>
     </div>
