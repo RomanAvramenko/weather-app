@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { useSelector } from 'react-redux'
 import { URL_WEATHER, API_KEY_OW } from "../../constants"
 import { GeolocationItem } from "../geolocation-item/geolocationItem"
 import { ListItem } from '../list-item/list-item'
@@ -9,7 +10,7 @@ import "./list.scss";
 function useLocalStorage(key, initialValue) {
   const [storedValue, setStoredValue] = useState(() => {
     try {
-      const item = window.localStorage.getItem(key)
+      const item = localStorage.getItem(key)
       return item ? JSON.parse(item) : initialValue
     } catch (error) {
       console.log(error);
@@ -21,7 +22,7 @@ function useLocalStorage(key, initialValue) {
       const valueToStore =
         value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);
-      window.localStorage.setItem(key, JSON.stringify(valueToStore))
+      localStorage.setItem(key, JSON.stringify(valueToStore))
     } catch (error) {
       console.log(error);
     }
@@ -31,28 +32,29 @@ function useLocalStorage(key, initialValue) {
 
 export const List = () => {
 
-  const [items, setItems] = useLocalStorage("items", [])
+  //const dispatch = useDispatch()
+  const item = useSelector(state => state.itemList.inputItem)
   const [response, setResponse] = useLocalStorage("response", [])
 
   useEffect(() => {
-    if (items.length > 0) {
-      const url = `${URL_WEATHER}q=${items[items.length - 1]}&units=metric${API_KEY_OW}`
-      axios
-        .get(url)
-        .then(resp => {
-          if (!response.some(i => i.name === resp.data.name)) {
-            setResponse([...response, transformData(resp)])
-            setItems([])
-          } else {
-            setItems([])
-          }
-        })
-        .catch(e => { console.error(e.config) });
+    const getData = async () => {
+      if (item) {
+        const url = `${URL_WEATHER}q=${item}&units=metric${API_KEY_OW}`
+        await axios
+          .get(url)
+          .then(resp => {
+            if (!response.some(i => i.name === resp.data.name)) {
+              setResponse([...response, transformData(resp)])
+            } else {
+              return
+            }
+          })
+          .catch(e => { console.error(e.config) });
+      }
     }
-    return () => {
-    }
+    getData()
     // eslint-disable-next-line
-  }, [items])
+  }, [item])
 
   const transformData = (result) => {
     return {
@@ -68,17 +70,10 @@ export const List = () => {
     setResponse(response.filter(el => el.id !== id))
   }
 
-  const addItem = (item) => {
-    if (!items.includes(item)) {
-      setItems([...items, item])
-    }
-  }
-
   return (
     <div className="box">
       <SearchBar
         response={response}
-        onAddData={addItem}
       />
       <ul className="box__list">
         <GeolocationItem />
