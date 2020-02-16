@@ -1,16 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
-
+import { itemListDeleteItem } from '../../store/actions/itemList';
 import "./list-item.scss";
 
-export const ListItem = ({ response, deleteItem }) => {
+export const ListItem = () => {
+
+  const response = useSelector(state => state.itemList.response)
+  const dispatch = useDispatch()
+
   return (
     <>
       {response.map(item => {
         const image = {
-          backgroundImage:
-            `url(https://openweathermap.org/img/wn/${item.icon}@2x.png)`
+          backgroundImage: `url(https://openweathermap.org/img/wn/${item.icon}@2x.png)`
         }
         return (
           <li className="list-item" key={item.id}>
@@ -22,9 +25,7 @@ export const ListItem = ({ response, deleteItem }) => {
             </div>
             <button
               className="list-item__btn"
-              onClick={() => {
-                deleteItem(item.id);
-              }}>
+              onClick={() => {dispatch(itemListDeleteItem(item.id))}}>
               <i className="fas fa-times"></i>
             </button>
             <div className="list-item__name">
@@ -44,9 +45,4 @@ export const ListItem = ({ response, deleteItem }) => {
       })}
     </>
   )
-}
-
-ListItem.propTypes = {
-  response: PropTypes.arrayOf(PropTypes.object),
-  deleteItem: PropTypes.func
 }

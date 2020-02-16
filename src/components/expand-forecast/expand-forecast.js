@@ -76,16 +76,16 @@ export const ExpandForecast = () => {
           <div>{moment(list[8].dt_txt).format("dddd")}</div>
           <div>
             {list[8].main.temp.toFixed()}&deg;/
-            {list[9].main.temp.toFixed()}&deg;
+            {list[list.length - 1].main.temp.toFixed()}&deg;
           </div>
           <div>
             <img
               className="icon"
-              src={weatherIcon(9)}
+              src={weatherIcon(list.length - 1)}
               alt=""
             />
           </div>
-          <div>{list[9].weather[0].description}</div>
+          <div>{list[list.length - 1].weather[0].description}</div>
         </div>
       </ul>
     </div>

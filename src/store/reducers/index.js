@@ -6,5 +6,5 @@ import { itemListReducer } from './itemList'
 export default combineReducers({
     geoloc: geolocationReducer,
     expand: expandReducer,
-    itemList: itemListReducer,
+    itemList: itemListReducer
 })

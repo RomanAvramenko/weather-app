@@ -1,20 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
 import './search-bar.scss'
 import { itemListAddItem } from '../../store/actions/itemList'
 
-export const SearchBar = ({ response }) => {
+export const SearchBar = () => {
   const dispatch = useDispatch()
   const [item, setItem] = useState('')
 
   const addItem = e => {
-    const index = response
-      .map(e => { return e.name.toLowerCase() })
-      .includes(item);
-    if (item !== "" && index === false && isNaN(parseInt(item))) {
-      dispatch(itemListAddItem(item))
-    }
+    dispatch(itemListAddItem(item))
     setItem('')
     e.preventDefault();
   }
@@ -35,8 +29,4 @@ export const SearchBar = ({ response }) => {
       </form>
     </>
   )
-}
-
-SearchBar.propTypes = {
-  response: PropTypes.arrayOf(PropTypes.object),
 }
