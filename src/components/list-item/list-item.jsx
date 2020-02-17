@@ -17,12 +17,8 @@ export const ListItem = () => {
         }
         return (
           <li className="list-item" key={item.id}>
-            <div className="list-item__temp">
-              {item.temp}&deg;
-            </div>
-            <div className="list-item__img"
-              style={image}>
-            </div>
+            <div className="list-item__temp">{item.temp}&deg;</div>
+            <div className="list-item__img"style={image}></div>
             <button
               className="list-item__btn"
               onClick={() => {dispatch(itemListDeleteItem(item.id))}}>

@@ -1,4 +1,5 @@
-import { ITEM_LIST_ADD_ITEM, ITEM_LIST_ADD_RESPONSE, ITEM_LIST_DELETE_ITEM } from '../types'
+import { ITEM_LIST_ADD_ITEM, ITEM_LIST_ADD_RESPONSE, ITEM_LIST_DELETE_ITEM, ITEM_LIST_RESTORE } from '../types'
+import { loadStorage } from '../localStorage'
 
 export const itemListAddItem = value => {
   return {
@@ -14,14 +15,22 @@ export const itemListDeleteItem = (id) => {
   }
 }
 
-export const itemListAddResponse = (respData) => {
+export const itemListRestore = () => {
+  return {
+    type: ITEM_LIST_RESTORE,
+    payload: loadStorage()
+  }
+}
+
+export const itemListAddResponse = respData => {
   return {
     type: ITEM_LIST_ADD_RESPONSE,
     response: transformData(respData)
   }
 }
 
-const transformData = (result) => {
+const transformData = result => {
+  console.log(result);
   return {
     id: result.data.id,
     name: result.data.name,

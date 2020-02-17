@@ -1,4 +1,4 @@
-import { ITEM_LIST_ADD_ITEM, ITEM_LIST_ADD_RESPONSE, ITEM_LIST_DELETE_ITEM } from '../types'
+import { ITEM_LIST_ADD_ITEM, ITEM_LIST_ADD_RESPONSE, ITEM_LIST_DELETE_ITEM, ITEM_LIST_RESTORE } from '../types'
 
 const initialState = {
   inputItem: null,
@@ -20,6 +20,11 @@ export const itemListReducer = (state = initialState, action) => {
       return {
         ...state,
         response: state.response.filter(el => el.id !== action.payload)
+      }
+    case ITEM_LIST_RESTORE:
+      return {
+        ...state,
+        response: action.payload
       }
     default: return state
   }
