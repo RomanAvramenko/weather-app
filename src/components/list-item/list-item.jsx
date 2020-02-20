@@ -1,13 +1,8 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux'
 import { Link } from "react-router-dom";
-import { itemListDeleteItem } from '../../store/actions/itemList';
 import "./list-item.scss";
 
-export const ListItem = () => {
-
-  const response = useSelector(state => state.itemList.response)
-  const dispatch = useDispatch()
+export const ListItem = ({response, deleteItem}) => {
 
   return (
     <>
@@ -21,7 +16,7 @@ export const ListItem = () => {
             <div className="list-item__img" style={image}></div>
             <button
               className="list-item__btn"
-              onClick={() => { dispatch(itemListDeleteItem(item.id)) }}>
+              onClick={() => deleteItem(item.id)}>
               <i className="fas fa-times"></i>
             </button>
             <div className="list-item__name">

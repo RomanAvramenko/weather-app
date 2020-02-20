@@ -2,7 +2,7 @@ import React from "react";
 
 import './spinner.scss';
 
-export const Spinner: React.FC<{}> = () => {
+export const Spinner = () => {
   return (
     <div className="spinner-wrapper">
       <div className="spinner">

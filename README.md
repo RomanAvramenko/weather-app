@@ -14,6 +14,7 @@
 <ul>
     <li>HTML, CSS, JavaScript - Базовый стек языков</li>
 	<li>React.js - JavaScript-библиотека</li>
+	<li>Redux.js - JavaScript-библиотека для управления состоянием приложения</li>
 	<li>Sass - Препроцессор CSS</li> 
 	<li>React-Router - Библиотека предоставляющая динамическое перемещение между страницами</li>
     <li>Axios - JavaScript-библиотека для осуществления HTTP запросов</li> 
