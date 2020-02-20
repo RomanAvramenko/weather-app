@@ -30,7 +30,6 @@ export const itemListAddResponse = respData => {
 }
 
 const transformData = result => {
-  console.log(result);
   return {
     id: result.data.id,
     name: result.data.name,

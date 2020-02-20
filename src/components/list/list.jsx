@@ -46,7 +46,6 @@ export const List = () => {
     getData()
     // eslint-disable-next-line
   }, [inputItem])
-
   return (
     <div className="box">
       <SearchBar />
