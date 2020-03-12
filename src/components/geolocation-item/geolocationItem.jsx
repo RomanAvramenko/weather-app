@@ -1,33 +1,17 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux'
-import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import { Spinner } from "../spinner/spinner";
 import "./geolocationItem.scss";
-import { geolocationReceive } from "../../store/actions/geolocation";
+import { getGeoData } from '../../store/actions/geolocation'
 
 export const GeolocationItem = () => {
 
   const geoWeather = useSelector(state => state.geoloc.geoWeather)
   const dispatch = useDispatch()
 
-  const getData = () => {
-    navigator.geolocation.getCurrentPosition(position => {
-      const { latitude, longitude } = position.coords;
-      const lat = latitude.toFixed(5);
-      const lon = longitude.toFixed(5);
-      const location = (`lat=${lat}&lon=${lon}`);
-      const url = `${URL_WEATHER}${location}&units=metric${API_KEY_OW}`;
-      return axios
-        .get(url)
-        .then(result => dispatch(geolocationReceive(result)))
-        .catch(e => { console.log(e.config) })
-    })
-  }
-
   useEffect(() => {
-    getData()
+    dispatch(getGeoData())
     // eslint-disable-next-line
   }, [])
 

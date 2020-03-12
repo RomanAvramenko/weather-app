@@ -32,7 +32,6 @@ function useLocalStorage(key, initialValue) {
 
 export const List = () => {
 
-  //const dispatch = useDispatch()
   const item = useSelector(state => state.itemList.inputItem)
   const [response, setResponse] = useLocalStorage("response", [])
 
