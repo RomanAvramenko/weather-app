@@ -18,7 +18,7 @@ export const getGeoData = () => {
   }
 }
 
-export const geolocationReceive = (result) => {
+const geolocationReceive = (result) => {
   return {
     type: GEOLOCATION_WEATHER_DATA,
     payload: transformData(result)

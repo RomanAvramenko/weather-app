@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import './search-bar.scss'
-import { itemListAddItem } from '../../store/actions/itemList'
+import { searchItem } from '../../store/actions/search'
 
 export const SearchBar = () => {
   const dispatch = useDispatch()
   const [item, setItem] = useState('')
 
   const addItem = e => {
-    dispatch(itemListAddItem(item))
+    dispatch(searchItem(item))
     setItem('')
     e.preventDefault();
   }
