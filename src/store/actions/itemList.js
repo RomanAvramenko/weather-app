@@ -4,9 +4,7 @@ import { URL_WEATHER, API_KEY_OW } from '../../constants';
 
 export const itemListGetData = () => {
   return async (dispatch, getState) => {
-    console.log(getState());
     const { itemList: { response }, search: { inputItem } } = getState()
-    console.log(inputItem);
     if (inputItem) {
       const url = `${URL_WEATHER}q=${inputItem}&units=metric${API_KEY_OW}`
       await axios

@@ -1,19 +1,27 @@
 import React, { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
 import { Spinner } from "../spinner/spinner"
 import { ExpandForecast } from "../expand-forecast/expand-forecast"
 import { ExpandPicture } from "../expand-picture/expand-picture"
 import { getData } from '../../store/actions/expand'
 
-export const Expand = ({ location }) => {
+type ExpandProps = { location: object }
+
+type RootState = { expand: object }
+
+type Expand = {
+  expandForecast?: object,
+  imageResp?: object[]
+}
+
+export const Expand = ({ location }: ExpandProps) => {
 
   const dispatch = useDispatch()
-  const { expandForecast, imageResp } = useSelector(state => state.expand)
+  const {expandForecast, imageResp}: Expand = useSelector((state: RootState) => state.expand)
+
 
   useEffect(() => {
     dispatch(getData(location))
-    return () => location
     // eslint-disable-next-line
   }, [location])
 
@@ -31,8 +39,4 @@ export const Expand = ({ location }) => {
       ? <Spinner />
       : renderChild()
   )
-}
-
-Expand.propTypes = {
-  location: PropTypes.object
 }
