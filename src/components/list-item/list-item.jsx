@@ -5,9 +5,8 @@ import "./list-item.scss"
 import { deleteItem } from '../../store/actions/itemList'
 
 export const ListItem = () => {
-
   const dispatch = useDispatch()
-  const { response } = useSelector(state => state.itemList)
+  const { response } = useSelector((state) => state.itemList)
 
   return (
     <>
@@ -22,7 +21,7 @@ export const ListItem = () => {
             <button
               className="list-item__btn"
               onClick={() => dispatch(deleteItem(item.id))}
-              >
+            >
               <i className="fas fa-times"></i>
             </button>
             <div className="list-item__name">

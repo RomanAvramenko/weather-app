@@ -7,10 +7,10 @@ export const SearchBar = () => {
   const dispatch = useDispatch()
   const [item, setItem] = useState('')
 
-  const addItem = e => {
+  const addItem = (event: any): void => {
     dispatch(searchItem(item))
     setItem('')
-    e.preventDefault();
+    event.preventDefault();
   }
 
   return (

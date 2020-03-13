@@ -19,7 +19,6 @@ export const Expand = ({ location }: ExpandProps) => {
   const dispatch = useDispatch()
   const {expandForecast, imageResp}: Expand = useSelector((state: RootState) => state.expand)
 
-
   useEffect(() => {
     dispatch(getData(location))
     // eslint-disable-next-line

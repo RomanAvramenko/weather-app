@@ -5,9 +5,20 @@ import { Spinner } from "../spinner/spinner";
 import "./geolocationItem.scss";
 import { getGeoData } from '../../store/actions/geolocation'
 
-export const GeolocationItem = () => {
+type RootState = {
+  geoloc: { geoWeather: object }
+}
 
-  const geoWeather = useSelector(state => state.geoloc.geoWeather)
+interface GeoWeather {
+  id?: number,
+  name?: string,
+  temp?: string,
+  icon?: string,
+  desc?: string
+}
+
+export const GeolocationItem = () => {
+  const geoWeather = useSelector((state: RootState) => state.geoloc.geoWeather)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -16,7 +27,7 @@ export const GeolocationItem = () => {
   }, [])
 
   if (geoWeather) {
-    const { id, name, temp, icon, desc } = geoWeather;
+    const { id, name, temp, icon, desc }: GeoWeather = geoWeather;
     return (
       <li key={id} className="geoLocItem">
         <div className="geoLocItem__temp">

@@ -6,10 +6,14 @@ import { SearchBar } from "../search-bar/search-bar"
 import { itemListGetData } from '../../store/actions/itemList'
 import "./list.scss";
 
+type RootState = { search: object }
+
+type Search = { inputItem?: string}
+
 export const List = () => {
 
   const dispatch = useDispatch()
-  const { inputItem } = useSelector(state => state.search)
+  const { inputItem }: Search = useSelector((state: RootState) => state.search)
 
   useEffect(() => {
     dispatch(itemListGetData())
