@@ -3,14 +3,26 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from "react-router-dom"
 import "./list-item.scss"
 import { deleteItem } from '../../store/actions/itemList'
+import { Spinner } from '../spinner/spinner'
+
+type RootState = { itemList: object }
+
+type Item = { response?: Items[] }
+
+interface Items {
+  icon: string;
+  id: number;
+  temp: number;
+  name: string
+}
 
 export const ListItem = () => {
   const dispatch = useDispatch()
-  const { response } = useSelector((state) => state.itemList)
+  const { response }: Item = useSelector((state: RootState) => state.itemList)
 
-  return (
-    <>
-      {response.map(item => {
+  const renderList = () => {
+    return (
+      response!.map(item => {
         const image = {
           backgroundImage: `url(https://openweathermap.org/img/wn/${item.icon}@2x.png)`
         }
@@ -38,7 +50,17 @@ export const ListItem = () => {
             </Link>
           </li>
         );
-      })}
+      })
+    )
+  }
+
+  return (
+    <>
+      {
+        !response
+          ? <Spinner />
+          : renderList()
+      }
     </>
   )
 }

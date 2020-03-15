@@ -22,12 +22,10 @@ export const List = () => {
 
   return (
     <div className="box">
-      <SearchBar
-      />
+      <SearchBar/>
       <ul className="box__list">
         <GeolocationItem />
-        <ListItem
-        />
+        <ListItem/>
       </ul>
     </div>
   );
