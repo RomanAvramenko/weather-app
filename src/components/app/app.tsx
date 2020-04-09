@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react";
+import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux';
 import "./app.scss";
@@ -8,7 +8,7 @@ import { Header } from '../header/header'
 import { ErrorBoundary } from "../error-boundary/error-boundary";
 import { store } from "../../store/store";
 
-export const App: FunctionComponent = () => {
+export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ErrorBoundary>

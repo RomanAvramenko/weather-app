@@ -4,17 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Spinner } from "../spinner/spinner";
 import "./geolocationItem.scss";
 import { getGeoData } from '../../store/actions/geolocation'
+import { WeatherResponseType } from "../../types/types";
 
 type RootState = {
   geoloc: { geoWeather: object }
-}
-
-interface GeoWeather {
-  id?: number,
-  name?: string,
-  temp?: string,
-  icon?: string,
-  desc?: string
 }
 
 export const GeolocationItem = () => {
@@ -27,7 +20,7 @@ export const GeolocationItem = () => {
   }, [])
 
   if (geoWeather) {
-    const { id, name, temp, icon, desc }: GeoWeather = geoWeather;
+    const { id, name, temp, icon, desc }: WeatherResponseType = geoWeather;
     return (
       <li key={id} className="geoLocItem">
         <div className="geoLocItem__temp">

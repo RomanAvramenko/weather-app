@@ -8,6 +8,7 @@ export const SearchBar = () => {
   const [item, setItem] = useState('')
 
   const addItem = (event: any): void => {
+    console.log(event);
     dispatch(searchItem(item))
     setItem('')
     event.preventDefault();
