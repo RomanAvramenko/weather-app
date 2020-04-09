@@ -1,5 +1,6 @@
 import { ITEM_LIST_GET_DATA, ITEM_LIST_DELETE_ITEM } from "../types";
 import { WeatherResponseType } from "../../types/types";
+import { ItemListAddDataActionType, ItemListDeleteItemActionType } from "../actions/itemList";
 
 type InitialStateType = {
   response: Array<WeatherResponseType>;
@@ -11,7 +12,7 @@ const initialState: InitialStateType = {
 
 export const itemListReducer = (
   state = initialState,
-  action: any
+  action: ItemListAddDataActionType | ItemListDeleteItemActionType
 ): InitialStateType => {
   switch (action.type) {
     case ITEM_LIST_GET_DATA:

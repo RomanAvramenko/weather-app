@@ -1,8 +1,9 @@
 import { GEOLOCATION_WEATHER_DATA } from "../types";
 import { WeatherResponseType } from "../../types/types";
+import { GeolocationReceiveActionType } from "../actions/geolocation";
 
 
-export type InitialStateType = {
+type InitialStateType = {
   geoWeather: WeatherResponseType | null;
 };
 
@@ -12,7 +13,7 @@ const initialState: InitialStateType = {
 
 export const geolocationReducer = (
   state = initialState,
-  action: any
+  action: GeolocationReceiveActionType
 ): InitialStateType => {
   switch (action.type) {
     case GEOLOCATION_WEATHER_DATA:

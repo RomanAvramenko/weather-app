@@ -1,19 +1,21 @@
 import { EXPAND_FORECAST_DATA } from "../types";
+import { ForecastData, ImageResponse } from "../../types/types";
+import { ExportForecastDataActionType } from "../actions/expand";
 
-/* type InitialStateType = {
-  expandForecast: null;
-  imageResp: [];
-}; */
+type InitialStateType = {
+  expandForecast: ForecastData | null;
+  imageResp: ImageResponse | null;
+};
 
-const initialState = {
+const initialState: InitialStateType = {
   expandForecast: null,
-  imageResp: [],
+  imageResp: null,
 };
 
 export const expandReducer = (
   state = initialState,
-  action: any
-) => {
+  action: ExportForecastDataActionType
+): InitialStateType => {
   switch (action.type) {
     case EXPAND_FORECAST_DATA:
       return {

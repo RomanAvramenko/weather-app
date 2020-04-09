@@ -6,6 +6,13 @@ import {
   API_KEY_OW,
   URL_FORECAST,
 } from "../../constants";
+import { ForecastData, ImageResponse } from "../../types/types";
+
+export type ExportForecastDataActionType = {
+  type: typeof EXPAND_FORECAST_DATA;
+  forecastData: ForecastData;
+  forecastImage: ImageResponse;
+};
 
 export const getData = (location: any) => {
   return async (dispatch: any) => {
@@ -29,7 +36,10 @@ export const getData = (location: any) => {
   };
 };
 
-const expandForecastReceive = (result: any, imgData: any) => {
+const expandForecastReceive = (
+  result: any,
+  imgData: any
+): ExportForecastDataActionType => {
   return {
     type: EXPAND_FORECAST_DATA,
     forecastData: transformForecastData(result),

@@ -18,3 +18,12 @@ type ForecastDataItem = {
   date: string;
   desc: string;
 };
+
+export type ForecastImageType = {
+  imageResp?: Array<ImageResponse>;
+};
+
+export type ImageResponse = {
+  urls: { small: string };
+  id: string;
+};
