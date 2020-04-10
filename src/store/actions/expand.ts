@@ -1,5 +1,8 @@
 import axios from "axios";
-import { EXPAND_FORECAST_DATA } from "../types";
+import {
+  EXPAND_FORECAST_DATA_SUCCESS,
+  EXPAND_FORECAST_DATA_START,
+} from "../types";
 import {
   URL_IMAGE,
   API_KEY_US,
@@ -9,18 +12,19 @@ import {
 import { ForecastData, ImageResponse } from "../../types/types";
 
 export type ExportForecastDataActionType = {
-  type: typeof EXPAND_FORECAST_DATA;
+  type: typeof EXPAND_FORECAST_DATA_SUCCESS;
   forecastData: ForecastData;
   forecastImage: ImageResponse;
 };
 
-export const getData = (location: any) => {
+export type ExportForecastFetchStartActionType = {
+  type: typeof EXPAND_FORECAST_DATA_START;
+};
+
+export const getData = (location: any): any => {
   return async (dispatch: any) => {
-    const state = location.state;
-    const loadData = undefined;
-    const stateCheck = loadData
-      ? state.name
-      : window.sessionStorage.getItem("key");
+    const { state } = location;
+    const stateCheck = state ? state.name : sessionStorage.getItem("key");
     const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
     const urlImage = `${
       URL_IMAGE + API_KEY_US
@@ -41,9 +45,15 @@ const expandForecastReceive = (
   imgData: any
 ): ExportForecastDataActionType => {
   return {
-    type: EXPAND_FORECAST_DATA,
+    type: EXPAND_FORECAST_DATA_SUCCESS,
     forecastData: transformForecastData(result),
     forecastImage: imgData.data.results,
+  };
+};
+
+export const exportForecastFetchStart = (): ExportForecastFetchStartActionType => {
+  return {
+    type: EXPAND_FORECAST_DATA_START,
   };
 };
 

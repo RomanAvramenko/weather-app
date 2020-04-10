@@ -13,7 +13,7 @@ declare global {
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["search"],
+  blacklist: ["search", "expand"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
