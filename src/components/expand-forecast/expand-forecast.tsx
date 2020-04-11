@@ -9,7 +9,7 @@ type RootState = {
 };
 
 export const ExpandForecast = () => {
-  const { id, name, list }: ForecastData = useSelector(
+  const { id, name, list } = useSelector(
     (state: RootState) => state.expand.expandForecast
   );
   const _imgUrl = "https://openweathermap.org/img/wn/";

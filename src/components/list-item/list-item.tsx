@@ -4,15 +4,11 @@ import { Link } from "react-router-dom";
 import "./list-item.scss";
 import { deleteItem } from "../../store/actions/itemList";
 import { Spinner } from "../spinner/spinner";
-import { ListDataType } from "../../types/types";
-
-type RootState = { itemList: object };
+import { RootState } from "../../types/types";
 
 export const ListItem = () => {
   const dispatch = useDispatch();
-  const { response }: ListDataType = useSelector(
-    (state: RootState) => state.itemList
-  );
+  const { response } = useSelector((state: RootState) => state.itemList);
   const renderList = () => {
     return response!.map((item) => {
       const image = {

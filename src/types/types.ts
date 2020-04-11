@@ -1,20 +1,32 @@
-export type ListDataType = {
-  response?: Array<ListItemDataType>;
+export type RootState = {
+  geoloc: {
+    geoWeather: WeatherResponseType;
+  };
+  search: Search;
+  itemList: ListDataType;
+  expand: ExpandType;
 };
 
-type ListItemDataType = {
-  icon: string;
-  id: number;
-  temp: number;
-  name: string;
+type Search = {
+  inputItem?: string;
+};
+
+export type ListDataType = {
+  response?: Array<WeatherResponseType>;
 };
 
 export type WeatherResponseType = {
-  id?: number;
+  id: number;
   name?: string;
   temp?: string;
   icon?: string;
   desc?: string;
+};
+
+export type ExpandType = {
+  expandForecast: ForecastData | null;
+  imageResp?: Array<ImageResponse>;
+  loading?: boolean;
 };
 
 export type ForecastData = {
@@ -28,10 +40,6 @@ type ForecastDataItem = {
   temp: number;
   date: string;
   desc: string;
-};
-
-export type ForecastImageType = {
-  imageResp?: Array<ImageResponse>;
 };
 
 export type ImageResponse = {

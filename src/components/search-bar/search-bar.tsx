@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux'
 import './search-bar.scss'
 import { searchItem } from '../../store/actions/search'
 
-export const SearchBar = () => {
+export const SearchBar: React.FC = () => {
   const dispatch = useDispatch()
   const [item, setItem] = useState('')
 
-  const addItem = (event: any): void => {
-    console.log(event);
+  const addItem = (event:React.FormEvent<EventTarget>): void => {
     dispatch(searchItem(item))
     setItem('')
     event.preventDefault();

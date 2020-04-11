@@ -4,23 +4,13 @@ import { Spinner } from "../spinner/spinner";
 import { ExpandForecast } from "../expand-forecast/expand-forecast";
 import { ExpandPicture } from "../expand-picture/expand-picture";
 import { getData, exportForecastFetchStart } from "../../store/actions/expand";
-import { ForecastData, ForecastImageType } from "../../types/types";
+import { RootState } from "../../types/types";
 
 type ExpandProps = { location: { state: { name: string } } };
 
-type RootState = { expand: object };
-
-type Expand = {
-  expandForecast?: ForecastData;
-  imageResp?: ForecastImageType;
-  loading?: boolean;
-};
-
 export const Expand = ({ location }: ExpandProps) => {
   const dispatch = useDispatch();
-  const { expandForecast, imageResp, loading }: Expand = useSelector(
-    (state: RootState) => state.expand
-  );
+  const { expandForecast, imageResp, loading } = useSelector((state: RootState) => state.expand);
 
   useEffect(() => {
     dispatch(exportForecastFetchStart());
@@ -40,9 +30,5 @@ export const Expand = ({ location }: ExpandProps) => {
     );
   };
 
-  return loading || !expandForecast || !imageResp ? (
-    <Spinner />
-  ) : (
-    renderChild()
-  );
+  return loading || !expandForecast || !imageResp ? <Spinner /> : renderChild();
 };
