@@ -10,6 +10,9 @@ declare global {
   }
 }
 
+type ReducerType = typeof reducer
+export type AppStateType = ReturnType<ReducerType>
+
 const persistConfig = {
   key: "root",
   storage,
@@ -20,8 +23,5 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-export const store: any = createStore(
-  persistedReducer,
-  composeEnhancers(applyMiddleware(thunk))
-);
+export const store: any = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
 export const persistor = persistStore(store);

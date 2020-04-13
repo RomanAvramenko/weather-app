@@ -1,17 +1,22 @@
+import { ForecastDataType } from './../../types/types';
 import {
   EXPAND_FORECAST_DATA_SUCCESS,
   EXPAND_FORECAST_DATA_START,
 } from "../types";
-import { ForecastData, ImageResponse } from "../../types/types";
 import {
   ExportForecastDataActionType,
   ExportForecastFetchStartActionType,
 } from "../actions/expand";
 
-type InitialStateType = {
-  expandForecast: ForecastData | null;
-  imageResp: ImageResponse | null;
-  loading: boolean;
+export type InitialStateType = {
+  expandForecast: ForecastDataType | null;
+  imageResp?: Array<ImageResponse> | null;
+  loading?: boolean;
+};
+
+export type ImageResponse = {
+  urls: { small: string };
+  id: string;
 };
 
 const initialState: InitialStateType = {

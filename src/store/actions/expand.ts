@@ -9,12 +9,12 @@ import {
   API_KEY_OW,
   URL_FORECAST,
 } from "../../constants";
-import { ForecastData, ImageResponse } from "../../types/types";
+import { ForecastDataType, ImageResponse } from "../../types/types";
 
 export type ExportForecastDataActionType = {
   type: typeof EXPAND_FORECAST_DATA_SUCCESS;
-  forecastData: ForecastData;
-  forecastImage: ImageResponse;
+  forecastData: ForecastDataType;
+  forecastImage: Array<ImageResponse>;
 };
 
 export type ExportForecastFetchStartActionType = {

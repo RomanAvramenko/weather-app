@@ -1,16 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { AppStateType } from "../../store/store";
 import "./expand-forecast.scss";
-import { ForecastData } from "../../types/types";
-
-type RootState = {
-  expand: { expandForecast: ForecastData };
-};
 
 export const ExpandForecast = () => {
-  const { id, name, list } = useSelector(
-    (state: RootState) => state.expand.expandForecast
+  const { id, name, list }: any = useSelector(
+    (state: AppStateType) => state.expand.expandForecast
   );
   const _imgUrl = "https://openweathermap.org/img/wn/";
   const weatherIcon = (index: number) =>

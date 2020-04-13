@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 import "./list-item.scss";
 import { deleteItem } from "../../store/actions/itemList";
 import { Spinner } from "../spinner/spinner";
-import { RootState } from "../../types/types";
+import { AppStateType } from "../../store/store";
 
 export const ListItem = () => {
   const dispatch = useDispatch();
-  const { response } = useSelector((state: RootState) => state.itemList);
+  const { response } = useSelector((state: AppStateType) => state.itemList);
   const renderList = () => {
     return response!.map((item) => {
       const image = {

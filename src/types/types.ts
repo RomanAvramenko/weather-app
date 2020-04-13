@@ -1,20 +1,3 @@
-export type RootState = {
-  geoloc: {
-    geoWeather: WeatherResponseType;
-  };
-  search: Search;
-  itemList: ListDataType;
-  expand: ExpandType;
-};
-
-type Search = {
-  inputItem?: string;
-};
-
-export type ListDataType = {
-  response?: Array<WeatherResponseType>;
-};
-
 export type WeatherResponseType = {
   id: number;
   name?: string;
@@ -23,13 +6,7 @@ export type WeatherResponseType = {
   desc?: string;
 };
 
-export type ExpandType = {
-  expandForecast: ForecastData | null;
-  imageResp?: Array<ImageResponse>;
-  loading?: boolean;
-};
-
-export type ForecastData = {
+export type ForecastDataType = {
   id: number;
   name: string;
   list: Array<ForecastDataItem>;

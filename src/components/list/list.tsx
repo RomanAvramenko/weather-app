@@ -4,15 +4,15 @@ import { GeolocationItem } from "../geolocation-item/geolocationItem"
 import { ListItem } from '../list-item/list-item'
 import { SearchBar } from "../search-bar/search-bar"
 import { itemListGetData } from '../../store/actions/itemList'
+import { AppStateType } from "../../store/store"
 import "./list.scss";
-import { RootState } from "../../types/types"
 
 
 
 export const List = () => {
 
   const dispatch = useDispatch()
-  const { inputItem } = useSelector((state: RootState) => state.search)
+  const { inputItem } = useSelector((state: AppStateType) => state.search)
 
   useEffect(() => {
     dispatch(itemListGetData())

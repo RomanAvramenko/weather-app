@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Spinner } from "../spinner/spinner";
 import "./geolocationItem.scss";
 import { getGeoData } from '../../store/actions/geolocation'
-import { RootState } from "../../types/types";
+import { AppStateType } from "../../store/store";
 
 export const GeolocationItem = () => {
-  const geoWeather = useSelector((state: RootState) => state.geoloc.geoWeather)
+  const geoWeather = useSelector((state: AppStateType) => state.geoloc.geoWeather)
   const dispatch = useDispatch()
 
   useEffect(() => {
