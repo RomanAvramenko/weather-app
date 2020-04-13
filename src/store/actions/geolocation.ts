@@ -2,13 +2,20 @@ import { GEOLOCATION_WEATHER_DATA } from "../types";
 import axios from "axios";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import { WeatherResponseType } from "../../types/types";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "../store";
 
 export type GeolocationReceiveActionType = {
-  type: typeof GEOLOCATION_WEATHER_DATA
-  payload: WeatherResponseType
-}
+  type: typeof GEOLOCATION_WEATHER_DATA;
+  payload: WeatherResponseType;
+};
 
-export const getGeoData = () => async (dispatch: any) => {
+export const getGeoData = (): ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  GeolocationReceiveActionType
+> => async dispatch => {
   navigator.geolocation.getCurrentPosition((position) => {
     const { latitude, longitude } = position.coords;
     const lat = latitude.toFixed(5);

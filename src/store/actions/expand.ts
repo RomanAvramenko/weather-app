@@ -10,6 +10,8 @@ import {
   URL_FORECAST,
 } from "../../constants";
 import { ForecastDataType, ImageResponse } from "../../types/types";
+import { ThunkAction } from "redux-thunk";
+import { AppStateType } from "../store";
 
 export type ExportForecastDataActionType = {
   type: typeof EXPAND_FORECAST_DATA_SUCCESS;
@@ -21,23 +23,29 @@ export type ExportForecastFetchStartActionType = {
   type: typeof EXPAND_FORECAST_DATA_START;
 };
 
-export const getData = (location: any): any => {
-  return async (dispatch: any) => {
-    const { state } = location;
-    const stateCheck = state ? state.name : sessionStorage.getItem("key");
-    const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
-    const urlImage = `${
-      URL_IMAGE + API_KEY_US
-    }&page=1&query=${stateCheck} city buildings`;
-    await axios
-      .all([axios.get(urlWeather), axios.get(urlImage)])
-      .then(
-        axios.spread((result, imgResp) =>
-          dispatch(expandForecastReceive(result, imgResp))
-        )
+type ActionsTypes =
+  | ExportForecastDataActionType
+  | ExportForecastFetchStartActionType;
+
+export const getData = (
+  location: any
+): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => async (
+  dispatch
+) => {
+  const { state } = location;
+  const stateCheck = state ? state.name : sessionStorage.getItem("key");
+  const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
+  const urlImage = `${
+    URL_IMAGE + API_KEY_US
+  }&page=1&query=${stateCheck} city buildings`;
+  await axios
+    .all([axios.get(urlWeather), axios.get(urlImage)])
+    .then(
+      axios.spread((result, imgResp) =>
+        dispatch(expandForecastReceive(result, imgResp))
       )
-      .catch((e) => console.log(e));
-  };
+    )
+    .catch((e) => console.log(e));
 };
 
 const expandForecastReceive = (

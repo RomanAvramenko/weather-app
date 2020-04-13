@@ -2,6 +2,8 @@ import axios from "axios";
 import { ITEM_LIST_GET_DATA, ITEM_LIST_DELETE_ITEM } from "../types";
 import { URL_WEATHER, API_KEY_OW } from "../../constants";
 import { WeatherResponseType } from "../../types/types";
+import { AppStateType } from "../store";
+import { ThunkAction } from "redux-thunk";
 
 export type ItemListAddDataActionType = {
   type: typeof ITEM_LIST_GET_DATA;
@@ -13,10 +15,14 @@ export type ItemListDeleteItemActionType = {
   payload: number;
 };
 
-export const itemListGetData = () => async (
-  dispatch: Function,
-  getState: Function
-) => {
+type ActionsTypes = ItemListAddDataActionType | ItemListDeleteItemActionType
+
+export const itemListGetData = (): ThunkAction<
+  Promise<void>,
+  AppStateType,
+  unknown,
+  ActionsTypes
+> => async (dispatch, getState) => {
   const {
     itemList: { response },
     search: { inputItem },

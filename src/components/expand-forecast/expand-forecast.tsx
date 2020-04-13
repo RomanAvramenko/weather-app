@@ -5,7 +5,7 @@ import { AppStateType } from "../../store/store";
 import "./expand-forecast.scss";
 
 export const ExpandForecast = () => {
-  const { id, name, list }: any = useSelector(
+  const { id, name, list }: any = useSelector( //Change Type
     (state: AppStateType) => state.expand.expandForecast
   );
   const _imgUrl = "https://openweathermap.org/img/wn/";
