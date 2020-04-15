@@ -17,7 +17,7 @@ export type ItemListDeleteItemActionType = {
 
 type ActionsTypes = ItemListAddDataActionType | ItemListDeleteItemActionType
 
-export const itemListGetData = (): ThunkAction<
+export const getItemListData = (): ThunkAction<
   Promise<void>,
   AppStateType,
   unknown,

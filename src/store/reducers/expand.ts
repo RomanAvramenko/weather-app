@@ -4,8 +4,8 @@ import {
   EXPAND_FORECAST_DATA_START,
 } from "../types";
 import {
-  ExportForecastDataActionType,
-  ExportForecastFetchStartActionType,
+  ExpandForecastDataActionType,
+  ExpandForecastFetchStartActionType,
 } from "../actions/expand";
 
 export type InitialStateType = {
@@ -27,7 +27,7 @@ const initialState: InitialStateType = {
 
 export const expandReducer = (
   state = initialState,
-  action: ExportForecastDataActionType | ExportForecastFetchStartActionType
+  action: ExpandForecastDataActionType | ExpandForecastFetchStartActionType
 ): InitialStateType => {
   switch (action.type) {
     case EXPAND_FORECAST_DATA_SUCCESS:

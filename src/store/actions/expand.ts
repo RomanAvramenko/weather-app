@@ -13,21 +13,21 @@ import { ForecastDataType, ImageResponse } from "../../types/types";
 import { ThunkAction } from "redux-thunk";
 import { AppStateType } from "../store";
 
-export type ExportForecastDataActionType = {
+export type ExpandForecastDataActionType = {
   type: typeof EXPAND_FORECAST_DATA_SUCCESS;
   forecastData: ForecastDataType;
   forecastImage: Array<ImageResponse>;
 };
 
-export type ExportForecastFetchStartActionType = {
+export type ExpandForecastFetchStartActionType = {
   type: typeof EXPAND_FORECAST_DATA_START;
 };
 
 type ActionsTypes =
-  | ExportForecastDataActionType
-  | ExportForecastFetchStartActionType;
+  | ExpandForecastDataActionType
+  | ExpandForecastFetchStartActionType;
 
-export const getData = (
+export const getExpandData = (
   location: any
 ): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => async (
   dispatch
@@ -51,7 +51,7 @@ export const getData = (
 const expandForecastReceive = (
   result: any,
   imgData: any
-): ExportForecastDataActionType => {
+): ExpandForecastDataActionType => {
   return {
     type: EXPAND_FORECAST_DATA_SUCCESS,
     forecastData: transformForecastData(result),
@@ -59,7 +59,7 @@ const expandForecastReceive = (
   };
 };
 
-export const exportForecastFetchStart = (): ExportForecastFetchStartActionType => {
+export const expandForecastFetchStart = (): ExpandForecastFetchStartActionType => {
   return {
     type: EXPAND_FORECAST_DATA_START,
   };
@@ -84,7 +84,7 @@ const transformForecastItem = (item: any) => {
 
 const stateParser = (list: any) => {
   const currentDay = list[0].dt_txt.replace(/ .*$/, "");
-  const filteredDays: any = [];
+  const filteredDays: Array<any> = [];
   list.map((item: any) => {
     const days = item.dt_txt.replace(/ .*$/, "");
     if (currentDay !== days) {
@@ -92,5 +92,5 @@ const stateParser = (list: any) => {
     }
     return item;
   });
-  return filteredDays.filter((i: any, index: number) => index % 4 === 0);
+  return filteredDays.filter((i: number, index: number) => index % 4 === 0);
 };

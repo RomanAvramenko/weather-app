@@ -3,11 +3,9 @@ import { useSelector, useDispatch } from 'react-redux'
 import { GeolocationItem } from "../geolocation-item/geolocationItem"
 import { ListItem } from '../list-item/list-item'
 import { SearchBar } from "../search-bar/search-bar"
-import { itemListGetData } from '../../store/actions/itemList'
 import { AppStateType } from "../../store/store"
+import { getItemListData } from "../../store/actions/itemList"
 import "./list.scss";
-
-
 
 export const List = () => {
 
@@ -15,7 +13,7 @@ export const List = () => {
   const { inputItem } = useSelector((state: AppStateType) => state.search)
 
   useEffect(() => {
-    dispatch(itemListGetData())
+    dispatch(getItemListData())
     // eslint-disable-next-line
   }, [inputItem])
 
