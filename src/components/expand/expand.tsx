@@ -3,14 +3,19 @@ import { useSelector, useDispatch } from "react-redux";
 import { Spinner } from "../spinner/spinner";
 import { ExpandForecast } from "../expand-forecast/expand-forecast";
 import { ExpandPicture } from "../expand-picture/expand-picture";
-import { expandForecastFetchStart, getExpandData } from "../../store/actions/expand";
+import {
+  expandForecastFetchStart,
+  getExpandData,
+} from "../../store/actions/expand";
 import { AppStateType } from "../../store/store";
 
 type ExpandProps = { location: { state: { name: string } } };
 
 export const Expand = ({ location }: ExpandProps) => {
   const dispatch = useDispatch();
-  const { expandForecast, imageResp, loading } = useSelector((state: AppStateType) => state.expand);
+  const { expandForecast, imageResp, loading } = useSelector(
+    (state: AppStateType) => state.expand
+  );
 
   useEffect(() => {
     dispatch(expandForecastFetchStart());
@@ -29,6 +34,5 @@ export const Expand = ({ location }: ExpandProps) => {
       </>
     );
   };
-
   return loading || !expandForecast || !imageResp ? <Spinner /> : renderChild();
 };

@@ -121,6 +121,7 @@ const stateParser = (list: any) => {
     newList[idx].maxTemp = Math.max(...tempArr);
     newList[idx].description = description[0];
     newList[idx].icon = icon[0];
+    return true;
   });
 
   return newList;
