@@ -27,26 +27,26 @@ type ActionsTypes =
   | ExpandForecastDataActionType
   | ExpandForecastFetchStartActionType;
 
-export const getExpandData = (
-  location: any
-): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> => async (
-  dispatch
-) => {
-  const { state } = location;
-  const stateCheck = state ? state.name : sessionStorage.getItem("key");
-  const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
-  const urlImage = `${
-    URL_IMAGE + API_KEY_US
-  }&page=1&query=${stateCheck} city buildings`;
-  await axios
-    .all([axios.get(urlWeather), axios.get(urlImage)])
-    .then(
-      axios.spread((result, imgResp) =>
-        dispatch(expandForecastReceive(result, imgResp))
+export const getExpandData =
+  (
+    location: any
+  ): ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes> =>
+  async (dispatch) => {
+    const { state } = location;
+    const stateCheck = state ? state.name : sessionStorage.getItem("key");
+    const urlWeather = `${URL_FORECAST}q=${stateCheck}&units=metric${API_KEY_OW}`;
+    const urlImage = `${
+      URL_IMAGE + API_KEY_US
+    }&page=1&query=${stateCheck} city buildings`;
+    await axios
+      .all([axios.get(urlWeather), axios.get(urlImage)])
+      .then(
+        axios.spread((result, imgResp) =>
+          dispatch(expandForecastReceive(result, imgResp))
+        )
       )
-    )
-    .catch((e) => console.log(e));
-};
+      .catch((e) => console.log(e));
+  };
 
 const expandForecastReceive = (
   result: any,
@@ -59,11 +59,12 @@ const expandForecastReceive = (
   };
 };
 
-export const expandForecastFetchStart = (): ExpandForecastFetchStartActionType => {
-  return {
-    type: EXPAND_FORECAST_DATA_START,
+export const expandForecastFetchStart =
+  (): ExpandForecastFetchStartActionType => {
+    return {
+      type: EXPAND_FORECAST_DATA_START,
+    };
   };
-};
 
 const transformForecastData = (result: any) => {
   return {
@@ -77,20 +78,50 @@ const transformForecastItem = (item: any) => {
   return {
     temp: item.main.temp.toFixed(),
     icon: item.weather[0].icon,
-    date: item.dt_txt,
+    date: new Intl.DateTimeFormat("ru-RU", {
+      weekday: "long",
+    }).format(new Date(item.dt_txt)),
     desc: item.weather[0].description,
   };
 };
 
 const stateParser = (list: any) => {
-  const currentDay = list[0].dt_txt.replace(/ .*$/, "");
+  let newList: Array<any> = [];
+  const currentDay = new Date(list[0].dt_txt).getDay();
   const filteredDays: Array<any> = [];
   list.map((item: any) => {
-    const days = item.dt_txt.replace(/ .*$/, "");
+    const days = new Date(item.dt_txt).getDay();
     if (currentDay !== days) {
       filteredDays.push(transformForecastItem(item));
     }
     return item;
   });
-  return filteredDays.filter((i: number, index: number) => index % 4 === 0);
+
+  const weekDays = Array.from(new Set(filteredDays.map((i) => i.date)));
+  weekDays.map((i) => newList.push({ day: i }));
+
+  let similarDay: Array<any> = [];
+  for (let item = 0; item < weekDays.length; item++) {
+    similarDay.push(
+      list.filter((i: any) => {
+        return (
+          new Intl.DateTimeFormat("ru-RU", {
+            weekday: "long",
+          }).format(new Date(i.dt_txt)) === weekDays[item]
+        );
+      })
+    );
+  }
+
+  similarDay.map((i: any, idx: any) => {
+    const description = i.map((i: any) => i.weather[0].description);
+    const icon = i.map((i: any) => i.weather[0].icon);
+    const tempArr = i.map((i: any) => +i.main.temp.toFixed());
+    newList[idx].minTemp = Math.min(...tempArr);
+    newList[idx].maxTemp = Math.max(...tempArr);
+    newList[idx].description = description[0];
+    newList[idx].icon = icon[0];
+  });
+
+  return newList;
 };

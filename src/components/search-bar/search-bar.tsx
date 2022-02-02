@@ -16,7 +16,6 @@ export const SearchBar: React.FC = () => {
   return (
     <>
       <form className="search__form" onSubmit={addItem}>
-        <label>
           <input
             type="text"
             className="search__form__input"
@@ -24,7 +23,6 @@ export const SearchBar: React.FC = () => {
             value={item}
             onChange={event => setItem(event.target.value.toLowerCase())}
           />
-        </label>
         <input className="search__form__btn" type="submit" value="Add" />
       </form>
     </>
