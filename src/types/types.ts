@@ -12,11 +12,12 @@ export type ForecastDataType = {
   list: Array<ForecastDataItem>;
 };
 
-type ForecastDataItem = {
+export type ForecastDataItem = {
   icon: string;
-  temp: number;
-  date: string;
-  desc: string;
+  minTemp: number;
+  maxTemp: number;
+  day: string;
+  description: string;
 };
 
 export type ImageResponse = {

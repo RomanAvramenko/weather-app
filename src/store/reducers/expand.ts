@@ -1,4 +1,4 @@
-import { ForecastDataType } from './../../types/types';
+import { ForecastDataType } from "./../../types/types";
 import {
   EXPAND_FORECAST_DATA_SUCCESS,
   EXPAND_FORECAST_DATA_START,
@@ -9,7 +9,7 @@ import {
 } from "../actions/expand";
 
 export type InitialStateType = {
-  expandForecast: ForecastDataType | null;
+  expandForecast: ForecastDataType | any;
   imageResp?: Array<ImageResponse> | null;
   loading?: boolean;
 };
